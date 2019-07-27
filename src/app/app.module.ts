@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontawesomeIconsModule } from './fontawesome-icons/fontawesome-icons.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FontAwesomeModule,
+    FontawesomeIconsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
