@@ -23,7 +23,8 @@ jobs:
       with:
         node-version: '12.x'
     - name: Build static files
-      run: npm install
-      run: npm run build:prod
+      run: |
+        npm install \
+        npm run build:prod
     - name: Deploy static files to S3 bucket
       run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
