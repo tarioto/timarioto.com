@@ -14,22 +14,23 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Detects if device is on iOS
-   const isIos = () => {
-     const userAgent = window.navigator.userAgent.toLowerCase();
-     return /iphone|ipad|ipod/.test( userAgent );
-   }
-   // Detects if device is in standalone mode
-   const isInStandaloneMode = () => ('standalone' in (window as any).navigator) && ((window as any).navigator.standalone);
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    }
 
-   // Checks if should display install popup notification:
-   // if (isIos() && !isInStandaloneMode()) {
-     setTimeout(() => {
+    // Detects if device is in standalone mode
+    const isInStandaloneMode = () => ('standalone' in (window as any).navigator) && ((window as any).navigator.standalone);
+
+    // Checks if should display install popup notification:
+    if (isIos() && !isInStandaloneMode()) {
+      setTimeout(() => {
         this.messageService.add({
           severity: "success",
           summary: "Install this app on your device.",
           detail: "Tap the share icon and then Add to homescreen"
         });
       }, 1000);
-   // }
+    }
   }
 }
