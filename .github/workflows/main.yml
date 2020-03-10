@@ -29,6 +29,10 @@ jobs:
     - name: Deploy static files to S3 bucket
       run: aws s3 sync ./dist/personal-site/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
     - name: Invalidate CloudFront Cache
-      uses: chrislennon/action-aws-cli@1.1
-      with:
-        args: cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+      uses: chetan/invalidate-cloudfront-action@master
+      env:
+        DISTRIBUTION: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+        PATHS: '/*'
+        AWS_REGION: 'us-west-2'
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
