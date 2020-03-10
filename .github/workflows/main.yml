@@ -19,10 +19,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
     - name: Build static site
-    - uses: actions/setup-node@master
+      uses: actions/setup-node@master
       with:
         node-version: '10.x'
-    - run: npm install
-    - run: npm run build:prod
+      run: npm install
+      run: npm run build:prod
     - name: Deploy static site to S3 bucket
-    - run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
+      run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
