@@ -27,4 +27,8 @@ jobs:
         npm install
         npm run build:prod
     - name: Deploy static files to S3 bucket
-      run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
+      run: aws s3 sync ./dist/personal-site/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+    - name: Invalidate CloudFront Cache
+      uses: actions/aws/cli@master
+      with:
+        args: cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
