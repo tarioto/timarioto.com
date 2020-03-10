@@ -10,12 +10,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Configure AWS Credentials
-    - uses: aws-actions/configure-aws-credentials@v1
-    - with:
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
     - name: Build static site
-    - run: npm install && npm run build-prod
+      run: npm install && npm run build-prod
     - name: Deploy static site to S3 bucket
-    - run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
+      run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
