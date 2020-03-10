@@ -22,7 +22,7 @@ jobs:
       uses: actions/setup-node@master
       with:
         node-version: '12.x'
-      run: npm install
-      run: npm run build:prod
+    - run: npm install
+    - run: npm run build:prod
     - name: Deploy static site to S3 bucket
       run: aws s3 sync ./dist/personal-site/ s3://timarioto.com --delete
