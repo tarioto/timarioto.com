@@ -11,10 +11,12 @@ import { FontawesomeIconsModule } from './modules/fontawesome-icons.module';
 import { PrimeNGModule } from './modules/primeng.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
