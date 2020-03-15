@@ -22,7 +22,8 @@ jobs:
           node-version: '12.x'
       - name: Install Dependencies
         run: |
-          npm config set '//npm.fontawesome.com/:_authToken' "${{ secrets.FONT_AWESOME_NPM_PACKAGE_TOKEN }}"
+          npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+          npm config set "//npm.fontawesome.com/:_authToken" "${{ secrets.FONT_AWESOME_NPM_PACKAGE_TOKEN }}"
           npm install
       - name: Build static files
         run: npm run build:prod
