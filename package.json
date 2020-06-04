@@ -29,7 +29,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/pro-duotone-svg-icons": "^5.12.1",
     "primeng": "^9.0.0",
-    "rxjs": "~6.5.4",
+    "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"
   },
