@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { NgcCookieConsentService, NgcInitializeEvent, NgcStatusChangeEvent, NgcNoCookieLawEvent } from 'ngx-cookieconsent';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,12 +12,6 @@ import { Subscription } from 'rxjs';
   providers: [MessageService]
 })
 export class AppComponent implements OnInit {
-  private popupOpenSubscription: Subscription;
-  private popupCloseSubscription: Subscription;
-  private initializeSubscription: Subscription;
-  private statusChangeSubscription: Subscription;
-  private revokeChoiceSubscription: Subscription;
-  private noCookieLawSubscription: Subscription;
 
   constructor(
     private messageService: MessageService,
@@ -60,10 +54,6 @@ export class AppComponent implements OnInit {
         this.ccService.destroy(); // remove previous cookie bar (with default messages)
         this.ccService.init(this.ccService.getConfig()); // update config with translated messages
       });
-    // this.popupOpenSubscription = this.ccService.popupOpen$.subscribe(
-    //   () => {
-    //     // you can use this.ccService.getConfig() to do stuff...
-    //   });
 
     // Detects if device is on iOS
     const isIos = () => {
