@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +12,25 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent implements OnInit {
   constructor(
     private messageService: MessageService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private cookieService: CookieService
   ) {
-    translate.addLangs(['en-US', 'it']);
-    translate.setDefaultLang('en-US');
-
+    translate.addLangs(['en', 'it']);
+    translate.setDefaultLang('en');
+    const fromCookie = this.cookieService.get('language');
+    console.log(fromCookie, 'fromCookie');
     const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en-US|it/) ? browserLang : 'en-US');
+    if (fromCookie !== '') {
+      translate.use(fromCookie);
+    } else {
+      if (browserLang.match(/en|it/)) {
+        translate.use(browserLang);
+        this.cookieService.set('language', browserLang);
+      } else {
+        translate.use('en');
+        this.cookieService.set('language', 'en');
+      }
+    }
   }
 
   ngOnInit() {
