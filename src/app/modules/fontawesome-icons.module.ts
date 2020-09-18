@@ -6,11 +6,9 @@ import { faLinkedin, faGithub, faInstagram } from '@fortawesome/free-brands-svg-
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule]
 })
-export class FontawesomeIconsModule {
+export class FontAwesomeIconsModule {
   constructor(library: FaIconLibrary) {
     // Add an icon to the library for convenient access in other components
     library.addIcons(faArrowDown, faLinkedin, faGithub, faInstagram);

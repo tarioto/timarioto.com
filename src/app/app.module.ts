@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,29 +12,42 @@ import { FooterComponent } from './footer/footer.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FontawesomeIconsModule } from './modules/fontawesome-icons.module';
+import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
 import { PrimeNGModule } from './modules/primeng.module';
-import { EmojiModule } from "@ctrl/ngx-emoji-mart/ngx-emoji";
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+
+// translate
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    FooterComponent,
-  ],
+  declarations: [AppComponent, HomeComponent, FooterComponent],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    EmojiModule,
     FlexLayoutModule,
     FontAwesomeModule,
-    FontawesomeIconsModule,
+    FontAwesomeIconsModule,
+    HttpClientModule,
     PrimeNGModule,
-    EmojiModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: []
 })
-export class AppModule { }
+export class AppModule {}
