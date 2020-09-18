@@ -15,6 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
 import { PrimeNGModule } from './modules/primeng.module';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 
 // translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -22,6 +23,22 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
+
+const cookieConfig: NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'timarioto.com'
+  },
+  position: 'bottom',
+  palette: {
+    popup: {
+      background: '#000'
+    },
+    button: {
+      background: '#f1d600'
+    }
+  },
+  theme: 'edgeless'
+};
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, FooterComponent],
@@ -35,6 +52,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FontAwesomeIconsModule,
     HttpClientModule,
     PrimeNGModule,
+    NgcCookieConsentModule.forRoot(cookieConfig),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),

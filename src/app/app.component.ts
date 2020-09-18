@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,30 +12,59 @@ import { CookieService } from 'ngx-cookie-service';
   providers: [MessageService]
 })
 export class AppComponent implements OnInit {
+  private popupOpenSubscription: Subscription;
+  private popupCloseSubscription: Subscription;
+  private initializeSubscription: Subscription;
+  private statusChangeSubscription: Subscription;
+  private revokeChoiceSubscription: Subscription;
+  private noCookieLawSubscription: Subscription;
+
   constructor(
     private messageService: MessageService,
-    public translate: TranslateService,
-    private cookieService: CookieService
-  ) {
-    translate.addLangs(['en', 'it']);
-    translate.setDefaultLang('en');
+    public translateService: TranslateService,
+    private cookieService: CookieService,
+    private ccService: NgcCookieConsentService
+  ) { }
+
+  ngOnInit() {
+    this.translateService.addLangs(['en', 'it']);
+    this.translateService.setDefaultLang('en');
     const fromCookie = this.cookieService.get('language');
     console.log(fromCookie, 'fromCookie');
-    const browserLang = translate.getBrowserLang();
+    const browserLang = this.translateService.getBrowserLang();
     if (fromCookie !== '') {
-      translate.use(fromCookie);
+      this.translateService.use(fromCookie);
     } else {
       if (browserLang.match(/en|it/)) {
-        translate.use(browserLang);
+        this.translateService.use(browserLang);
         this.cookieService.set('language', browserLang);
       } else {
-        translate.use('en');
+        this.translateService.use('en');
         this.cookieService.set('language', 'en');
       }
     }
-  }
+    this.translateService
+      .get(['cookie.header', 'cookie.message', 'cookie.dismiss', 'cookie.allow', 'cookie.deny', 'cookie.link', 'cookie.policy'])
+      .subscribe(data => {
 
-  ngOnInit() {
+        this.ccService.getConfig().content = this.ccService.getConfig().content || {} ;
+        // Override default messages with the translated ones
+        this.ccService.getConfig().content.header = data['cookie.header'];
+        this.ccService.getConfig().content.message = data['cookie.message'];
+        this.ccService.getConfig().content.dismiss = data['cookie.dismiss'];
+        this.ccService.getConfig().content.allow = data['cookie.allow'];
+        this.ccService.getConfig().content.deny = data['cookie.deny'];
+        this.ccService.getConfig().content.link = data['cookie.link'];
+        this.ccService.getConfig().content.policy = data['cookie.policy'];
+
+        this.ccService.destroy(); // remove previous cookie bar (with default messages)
+        this.ccService.init(this.ccService.getConfig()); // update config with translated messages
+      });
+    // this.popupOpenSubscription = this.ccService.popupOpen$.subscribe(
+    //   () => {
+    //     // you can use this.ccService.getConfig() to do stuff...
+    //   });
+
     // Detects if device is on iOS
     const isIos = () => {
       const userAgent = window.navigator.userAgent.toLowerCase();
