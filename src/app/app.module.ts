@@ -26,7 +26,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
-    domain: 'timarioto.com'
+    domain: environment.domain
   },
   position: 'bottom',
   palette: {
