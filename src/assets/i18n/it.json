@@ -1,5 +1,14 @@
 {
-  "HOME": {
-    "TITLE": "Ciao!"
+  "home": {
+    "title": "Ciao!"
+  },
+  "cookie": {
+        "header": "Cookie utilizzati nel sito web!",
+        "message": "Questo sito Web utilizza i cookie per assicurarti la migliore esperienza sul nostro sito Web.",
+        "dismiss": "Fatto!",
+        "allow": "Consenti i cookie",
+        "deny": "Declino",
+        "link": "Per saperne di più",
+        "policy": "Gestione dei Cookie"
   }
 }
