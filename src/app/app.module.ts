@@ -12,11 +12,13 @@ import { PrimeNGModule } from './modules/primeng.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
