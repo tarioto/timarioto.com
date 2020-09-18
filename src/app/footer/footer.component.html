@@ -1,10 +1,10 @@
 <div class="footer" fxLayout="row" fxLayoutAlign="end center">
   <a fxFlex class="icon">
-    
+
     <label>
-      <select #langSelect (change)="translate.use(langSelect.value)">
+      <select #langSelect (change)="changeLang(langSelect.value)">
         <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">
-          <ngx-emoji *ngIf="lang === 'en-US'" emoji="us" size="14" isNative=true></ngx-emoji>
+          <ngx-emoji *ngIf="lang === 'en'" emoji="us" size="14" isNative=true></ngx-emoji>
           <ngx-emoji *ngIf="lang === 'it'" emoji="it" size="14" isNative=true></ngx-emoji>
         </option>
       </select>
