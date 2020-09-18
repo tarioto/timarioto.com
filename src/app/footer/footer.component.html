@@ -1,6 +1,15 @@
 <div class="footer" fxLayout="row" fxLayoutAlign="end center">
   <a fxFlex class="icon">
-    <ngx-emoji emoji="smile" size="14" isNative=true></ngx-emoji>
+    
+    <label>
+      <select #langSelect (change)="translate.use(langSelect.value)">
+        <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">
+          <ngx-emoji *ngIf="lang === 'en-US'" emoji="us" size="14" isNative=true></ngx-emoji>
+          <ngx-emoji *ngIf="lang === 'it'" emoji="it" size="14" isNative=true></ngx-emoji>
+        </option>
+      </select>
+    </label>
+
   </a>
   <a class="icon" href="https://www.linkedin.com/in/timarioto" target="_blank">
     <fa-icon [icon]="['fab', 'linkedin']"></fa-icon>

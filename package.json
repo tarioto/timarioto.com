@@ -29,6 +29,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/pro-duotone-svg-icons": "^5.14.0",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "primeng": "^10.0.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",

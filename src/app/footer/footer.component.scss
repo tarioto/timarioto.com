@@ -6,6 +6,14 @@
 }
 
 .icon {
-  color: white;
   padding: 5px;
 }
+
+select {
+  border: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+}
+select:focus { outline:0; }
