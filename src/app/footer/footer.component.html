@@ -1,26 +1,24 @@
 <div class="footer" fxLayout="row" fxLayoutAlign="end center">
   <a fxFlex class="icon">
-
     <label>
       <select #langSelect (change)="changeLang(langSelect.value)">
         <option *ngFor="let lang of translateService.getLangs()" [value]="lang" [selected]="lang === translateService.currentLang">
-          <ngx-emoji *ngIf="lang === 'en'" emoji="us" size="14" isNative=true></ngx-emoji>
-          <ngx-emoji *ngIf="lang === 'it'" emoji="it" size="14" isNative=true></ngx-emoji>
+          <ngx-emoji *ngIf="lang === 'en'" emoji="us" size="20" isNative=true></ngx-emoji>
+          <ngx-emoji *ngIf="lang === 'it'" emoji="it" size="20" isNative=true></ngx-emoji>
         </option>
       </select>
     </label>
-
   </a>
-  <a class="link" href="https://vizrisk.timarioto.com" target="_blank">
+  <a class="link" href="https://vizrisk.timarioto.com">
     #VIZRISK
   </a>
   <a class="icon" href="https://www.linkedin.com/in/timarioto" target="_blank">
-    <fa-icon [icon]="['fab', 'linkedin']"></fa-icon>
+    <fa-icon [icon]="['fab', 'linkedin']" size="lg"></fa-icon>
   </a>
   <a class="icon" href="https://github.com/tarioto" target="_blank">
-    <fa-icon [icon]="['fab', 'github']"></fa-icon>
+    <fa-icon [icon]="['fab', 'github']" size="lg"></fa-icon>
   </a>
   <a class="icon" href="https://www.instagram.com/tarioto" target="_blank">
-    <fa-icon [icon]="['fab', 'instagram']"></fa-icon>
+    <fa-icon [icon]="['fab', 'instagram']" size="lg"></fa-icon>
   </a>
 </div>
