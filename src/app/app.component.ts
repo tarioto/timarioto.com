@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { NgcCookieConsentService, NgcInitializeEvent, NgcStatusChangeEvent, NgcNoCookieLawEvent } from 'ngx-cookieconsent';
@@ -8,13 +7,11 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
   constructor(
-    private messageService: MessageService,
     public translateService: TranslateService,
     private cookieService: CookieService,
     private ccService: NgcCookieConsentService
@@ -69,11 +66,7 @@ export class AppComponent implements OnInit {
     // Checks if should display install popup notification:
     if (isIos() && !isInStandaloneMode()) {
       setTimeout(() => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Install this app on your device.',
-          detail: 'Tap the share icon and then Add to homescreen'
-        });
+
       }, 1000);
     }
   }

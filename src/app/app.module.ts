@@ -13,7 +13,6 @@ import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FontAwesomeIconsModule } from './modules/fontawesome-icons.module';
-import { PrimeNGModule } from './modules/primeng.module';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 
@@ -51,7 +50,6 @@ const cookieConfig: NgcCookieConsentConfig = {
     FontAwesomeModule,
     FontAwesomeIconsModule,
     HttpClientModule,
-    PrimeNGModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production

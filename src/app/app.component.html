@@ -1,15 +1,2 @@
 <router-outlet></router-outlet>
-
 <app-footer></app-footer>
-
-<!-- Popup for mobile to add as web app -->
-<p-toast styleClass="custom-toast" position="bottom-center">
-  <ng-template let-message pTemplate="message">
-    <div style="text-align: center">
-      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
-      <h3>{{message.summary}}</h3>
-      <p>{{message.detail}}</p>
-      <fa-icon [icon]="['fad', 'arrow-down']"></fa-icon>
-    </div>
-  </ng-template>
-</p-toast>
