@@ -19,6 +19,7 @@ import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsen
 // translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FourZeroFourComponent } from './four-zero-four/four-zero-four.component';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -40,7 +41,7 @@ const cookieConfig: NgcCookieConsentConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, FooterComponent],
+  declarations: [AppComponent, HomeComponent, FooterComponent, FourZeroFourComponent],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
