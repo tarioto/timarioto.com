@@ -28,7 +28,7 @@ jobs:
       - name: Build static files
         run: npm run build:prod
       - name: Deploy static files to S3 bucket
-        run: aws s3 sync ./dist/personal-site/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+        run: aws s3 sync ./dist/personal-site/ ./resume.pdf s3://${{ secrets.AWS_S3_BUCKET }} --delete
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@master
         env:
