@@ -17,7 +17,7 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changeLang(selectedLang): void {
+  changeLang(selectedLang: string): void {
     this.translateService.use(selectedLang);
     this.cookieService.set('language', selectedLang);
     this.translateService

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
-import { NgcCookieConsentService, NgcInitializeEvent, NgcStatusChangeEvent, NgcNoCookieLawEvent } from 'ngx-cookieconsent';
-import { Subscription } from 'rxjs';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
 
 @Component({
   selector: 'app-root',
