@@ -41,30 +41,29 @@ const cookieConfig: NgcCookieConsentConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, FooterComponent, FourZeroFourComponent],
-  imports: [
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    EmojiModule,
-    FlexLayoutModule,
-    FontAwesomeModule,
-    FontAwesomeIconsModule,
-    HttpClientModule,
-    NgcCookieConsentModule.forRoot(cookieConfig),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
-    }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: []
+    declarations: [AppComponent, HomeComponent, FooterComponent, FourZeroFourComponent],
+    imports: [
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        EmojiModule,
+        FlexLayoutModule,
+        FontAwesomeModule,
+        FontAwesomeIconsModule,
+        HttpClientModule,
+        NgcCookieConsentModule.forRoot(cookieConfig),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production
+        }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
