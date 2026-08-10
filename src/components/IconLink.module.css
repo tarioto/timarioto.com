@@ -1,0 +1,17 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition:
+    color 150ms ease,
+    background 150ms ease;
+}
+
+.link:hover {
+  color: var(--accent);
+  background: var(--border);
+}
