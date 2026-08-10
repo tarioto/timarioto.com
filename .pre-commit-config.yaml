@@ -1,0 +1,8 @@
+# Local secret scanning on every commit.
+# One-time setup per clone:  pre-commit install
+# (install the tool with:    brew install pre-commit gitleaks)
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
