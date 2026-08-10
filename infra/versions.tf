@@ -8,6 +8,12 @@ terraform {
     }
   }
 
-  # Local state for now. To move to remote state later, add an S3 backend
-  # block here (bucket + DynamoDB lock table) and run `tofu init -migrate-state`.
+  # Remote state in S3 with native S3 locking (use_lockfile, no DynamoDB).
+  backend "s3" {
+    bucket       = "timarioto-tofu-state-322859817636"
+    key          = "timarioto.com/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
 }

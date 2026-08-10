@@ -15,8 +15,10 @@ certificate and Route53 alias records.
 | `variables.tf`  | `aws_region`, `domain_name`, `subject_alternative_names` |
 | `outputs.tf`    | Bucket name, distribution ID, CloudFront domain, cert ARN |
 
-State is local (`terraform.tfstate`, git-ignored). To move to remote state later,
-add an S3 backend block in `versions.tf` and run `tofu init -migrate-state`.
+State is stored remotely in S3 (`s3://timarioto-tofu-state-322859817636`, key
+`timarioto.com/terraform.tfstate`) with native S3 locking (`use_lockfile`, no
+DynamoDB). The bucket is versioned and encrypted. Backend config is in
+`versions.tf`; run `tofu init` to use it.
 
 ## Apply
 
