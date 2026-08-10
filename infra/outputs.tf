@@ -17,3 +17,5 @@ output "certificate_arn" {
   description = "ARN of the issued ACM certificate."
   value       = aws_acm_certificate.site.arn
 }
+
+# (CI test: verifying the infra plan/comment workflow)
