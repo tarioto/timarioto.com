@@ -22,6 +22,19 @@
 vite.config.js
 vite.config.d.ts
 
+# OpenTofu / Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
 # logs
 npm-debug.log*
 yarn-debug.log*
