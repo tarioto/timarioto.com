@@ -58,3 +58,4 @@ Thumbs.db
 
 # operator IAM policy (documentation, not tracked)
 infra/iam-policy.json
+infra/github-oidc-trust-policy.json

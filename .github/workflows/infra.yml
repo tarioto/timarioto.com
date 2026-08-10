@@ -1,0 +1,88 @@
+name: Infra
+
+on:
+  pull_request:
+    paths:
+      - 'infra/**'
+      - '.github/workflows/infra.yml'
+  push:
+    branches:
+      - master
+    paths:
+      - 'infra/**'
+      - '.github/workflows/infra.yml'
+
+# OIDC token to assume the AWS role; write PR comments with the plan.
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: infra-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tofu:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: opentofu/setup-opentofu@v1
+        with:
+          tofu_version: 1.12.5
+          tofu_wrapper: false
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::322859817636:role/github-actions-tofu
+          aws-region: us-east-1
+
+      - name: tofu init
+        run: tofu init -input=false
+
+      - name: tofu fmt
+        run: tofu fmt -check -recursive
+
+      - name: tofu validate
+        run: tofu validate -no-color
+
+      - name: tofu plan
+        id: plan
+        if: github.event_name == 'pull_request'
+        run: |
+          set +e
+          tofu plan -no-color -input=false -out=tfplan > plan_output.txt 2>&1
+          code=$?
+          echo "exitcode=$code" >> "$GITHUB_OUTPUT"
+          cat plan_output.txt
+          exit 0
+
+      - name: Comment plan on PR
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          status='success ✅'
+          [ "${{ steps.plan.outputs.exitcode }}" = "0" ] || status='failed ❌'
+          {
+            echo "#### OpenTofu Plan — ${status}"
+            echo
+            echo '<details><summary>Show plan</summary>'
+            echo
+            echo '```'
+            tail -c 60000 plan_output.txt
+            echo '```'
+            echo '</details>'
+          } > comment.md
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file comment.md
+          # Fail the check if the plan errored.
+          exit "${{ steps.plan.outputs.exitcode }}"
+
+      - name: tofu apply
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: tofu apply -no-color -input=false -auto-approve
