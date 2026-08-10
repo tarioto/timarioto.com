@@ -55,3 +55,6 @@ yarn-error.log*
 # System files
 .DS_Store
 Thumbs.db
+
+# operator IAM policy (documentation, not tracked)
+infra/iam-policy.json
