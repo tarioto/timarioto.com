@@ -1,3 +1,39 @@
+# Security headers applied to every response. HSTS is intentionally scoped to
+# this hostname only (no includeSubDomains / preload) so it can't force HTTPS on
+# sibling *.timarioto.com hosts that may not serve it; tighten later if desired.
+resource "aws_cloudfront_response_headers_policy" "security" {
+  name = "${replace(var.domain_name, ".", "-")}-security-headers"
+
+  security_headers_config {
+    strict_transport_security {
+      access_control_max_age_sec = 31536000 # 1 year
+      include_subdomains         = false
+      preload                    = false
+      override                   = true
+    }
+
+    content_type_options {
+      override = true
+    }
+
+    frame_options {
+      frame_option = "DENY"
+      override     = true
+    }
+
+    referrer_policy {
+      referrer_policy = "strict-origin-when-cross-origin"
+      override        = true
+    }
+
+    xss_protection {
+      mode_block = true
+      protection = true
+      override   = true
+    }
+  }
+}
+
 resource "aws_cloudfront_origin_access_control" "site" {
   name                              = "${var.domain_name}-oac"
   origin_access_control_origin_type = "s3"
@@ -28,7 +64,8 @@ resource "aws_cloudfront_distribution" "site" {
     compress               = true
 
     # AWS managed "CachingOptimized" policy.
-    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
   }
 
   # Single-page-app style fallback: unknown paths serve index.html.
