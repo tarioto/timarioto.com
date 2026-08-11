@@ -15,3 +15,9 @@ variable "subject_alternative_names" {
   type        = list(string)
   default     = ["www.timarioto.com"]
 }
+
+variable "github_repository" {
+  description = "owner/repo allowed to assume the deploy role via OIDC."
+  type        = string
+  default     = "tarioto/timarioto.com"
+}
