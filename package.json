@@ -11,13 +11,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19",
+    "react-dom": "^19"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^10.8.1",
     "eslint-plugin-react-hooks": "^7.1.1",
