@@ -54,6 +54,8 @@ jobs:
       - name: tofu plan
         id: plan
         if: github.event_name == 'pull_request'
+        env:
+          TF_VAR_trakt_client_id: ${{ secrets.TRAKT_CLIENT_ID }}
         run: |
           set +e
           tofu plan -no-color -input=false -out=tfplan > plan_output.txt 2>&1
@@ -85,4 +87,6 @@ jobs:
 
       - name: tofu apply
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          TF_VAR_trakt_client_id: ${{ secrets.TRAKT_CLIENT_ID }}
         run: tofu apply -no-color -input=false -auto-approve
