@@ -71,11 +71,15 @@ jobs:
           # fingerprinted — must revalidate so new deploys are picked up.
           # assets/* is excluded here so this pass never touches or deletes it.
           # trakt.json and weather.json are written independently by the
-          # scheduled poller Lambdas and must survive site deploys.
+          # scheduled poller Lambdas; song.json and album.json are written
+          # independently by a local script (see scripts/song-of-the-month/).
+          # All four must survive site deploys.
           aws s3 sync ./dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete \
             --exclude "assets/*" \
             --exclude "trakt.json" \
             --exclude "weather.json" \
+            --exclude "song.json" \
+            --exclude "album.json" \
             --cache-control "no-cache"
           # Vite fingerprints everything under assets/ — safe to cache forever.
           aws s3 sync ./dist/assets/ s3://${{ secrets.AWS_S3_BUCKET }}/assets/ --delete \

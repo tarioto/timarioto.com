@@ -3,11 +3,15 @@
 # build output
 /dist
 
-# Local sample data for testing poller-fed sections (trakt.json, weather.json
-# are written to the deployed S3 bucket by scheduled Lambdas, not built by
-# Vite — drop sample copies here for local dev, never commit real ones).
+# Local sample data for testing poller-fed sections. trakt.json/weather.json
+# are written to the deployed S3 bucket by scheduled Lambdas; song.json/
+# album.json are written by the local script in scripts/song-of-the-month/.
+# None of these are built by Vite — drop sample copies here for local dev,
+# never commit real ones.
 /public/trakt.json
 /public/weather.json
+/public/song.json
+/public/album.json
 
 # dependencies
 /node_modules
