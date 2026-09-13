@@ -32,3 +32,8 @@ output "weather_poller_function_name" {
   description = "Name of the scheduled weather poller Lambda, for manual invocation (aws lambda invoke)."
   value       = aws_lambda_function.weather_poller.function_name
 }
+
+output "song_publisher_user_name" {
+  description = "IAM user name for the local song/album-of-the-month script (aws iam create-access-key --user-name <this>)."
+  value       = aws_iam_user.song_publisher.name
+}
