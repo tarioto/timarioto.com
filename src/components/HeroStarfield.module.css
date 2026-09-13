@@ -1,0 +1,18 @@
+.container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  transition: background 1.2s ease;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
