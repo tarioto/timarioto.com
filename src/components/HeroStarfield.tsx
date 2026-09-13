@@ -15,6 +15,10 @@ const CONSTELLATION_LINES = constellationLinesData as LineSegment[]
 const SKY_UPDATE_INTERVAL_MS = 30_000
 const PARALLAX_MAX_PX = 18
 const PARALLAX_EASE = 0.06
+const HOVER_RADIUS_PX = 150
+const HOVER_EASE = 0.15
+const HOVER_FADE_EASE = 0.12
+const HOVER_HUE_SPEED_DEG_PER_SEC = 18
 
 interface Star {
   ra: number
@@ -106,6 +110,14 @@ export default function HeroStarfield() {
     const target = { x: 0, y: 0 }
     const current = { x: 0, y: 0 }
 
+    // Hover glow: a soft colored light that follows the cursor and brightens
+    // nearby stars. Tracked separately from the parallax offset above since
+    // it needs raw (unshifted) cursor position and its own fade in/out.
+    const hoverTarget = { x: 0, y: 0 }
+    const hoverCurrent = { x: 0, y: 0 }
+    let hoverActive = false
+    let hoverOpacity = 0
+
     function resize() {
       if (!container || !canvas) return
       width = container.clientWidth
@@ -120,13 +132,19 @@ export default function HeroStarfield() {
     function handlePointerMove(event: PointerEvent) {
       if (event.pointerType !== 'mouse' || !container) return
       const rect = container.getBoundingClientRect()
-      target.x = ((event.clientX - rect.left) / rect.width - 0.5) * PARALLAX_MAX_PX * 2
-      target.y = ((event.clientY - rect.top) / rect.height - 0.5) * PARALLAX_MAX_PX * 2
+      const nx = (event.clientX - rect.left) / rect.width - 0.5
+      const ny = (event.clientY - rect.top) / rect.height - 0.5
+      target.x = nx * PARALLAX_MAX_PX * 2
+      target.y = ny * PARALLAX_MAX_PX * 2
+      hoverTarget.x = event.clientX - rect.left
+      hoverTarget.y = event.clientY - rect.top
+      hoverActive = true
     }
 
     function handlePointerLeave() {
       target.x = 0
       target.y = 0
+      hoverActive = false
     }
 
     function draw(timeMs: number) {
@@ -153,15 +171,43 @@ export default function HeroStarfield() {
         ctx!.stroke()
       }
 
+      hoverCurrent.x += (hoverTarget.x - hoverCurrent.x) * HOVER_EASE
+      hoverCurrent.y += (hoverTarget.y - hoverCurrent.y) * HOVER_EASE
+      hoverOpacity += ((hoverActive ? 1 : 0) - hoverOpacity) * HOVER_FADE_EASE
+
+      const hue = (timeMs / 1000) * HOVER_HUE_SPEED_DEG_PER_SEC
+      if (hoverOpacity > 0.01) {
+        const glowRadius = HOVER_RADIUS_PX * 1.6
+        const glow = ctx!.createRadialGradient(hoverCurrent.x, hoverCurrent.y, 0, hoverCurrent.x, hoverCurrent.y, glowRadius)
+        glow.addColorStop(0, `hsla(${hue}, 85%, 70%, ${0.35 * hoverOpacity})`)
+        glow.addColorStop(1, 'hsla(0, 0%, 0%, 0)')
+        ctx!.save()
+        ctx!.globalCompositeOperation = 'lighter'
+        ctx!.fillStyle = glow
+        ctx!.fillRect(0, 0, width, height)
+        ctx!.restore()
+      }
+
       const t = prefersReducedMotion ? 0 : timeMs / 1000
       for (const star of sceneRef.current.stars) {
         const x = cx + star.x * domeRadius
         const y = cy + star.y * domeRadius
         const size = Math.max(0.6, (5 - star.mag) * 0.45)
         const twinkle = prefersReducedMotion ? 1 : 0.65 + 0.35 * Math.sin(t * star.twinkleSpeed + star.twinklePhase)
+
+        let hoverBoost = 0
+        if (hoverOpacity > 0.01) {
+          const dist = Math.hypot(x - hoverCurrent.x, y - hoverCurrent.y)
+          if (dist < HOVER_RADIUS_PX) hoverBoost = (1 - dist / HOVER_RADIUS_PX) * hoverOpacity
+        }
+
+        const alpha = Math.min(1, twinkle + hoverBoost * 0.9)
+        const drawSize = size + hoverBoost * 3
+
         ctx!.beginPath()
-        ctx!.fillStyle = `rgba(255, 255, 255, ${Math.min(1, twinkle)})`
-        ctx!.arc(x, y, size, 0, Math.PI * 2)
+        ctx!.fillStyle =
+          hoverBoost > 0.05 ? `hsla(${hue}, 90%, 82%, ${alpha})` : `rgba(255, 255, 255, ${alpha})`
+        ctx!.arc(x, y, drawSize, 0, Math.PI * 2)
         ctx!.fill()
       }
 
@@ -172,17 +218,22 @@ export default function HeroStarfield() {
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(container)
 
+    // Listen on the hero itself, not just this (background) layer: the
+    // headline/tagline/buttons render in a sibling on top of the canvas, so
+    // pointer events over them would never reach a listener on `container`.
+    const pointerTarget = container.parentElement ?? container
+
     if (!prefersReducedMotion) {
-      container.addEventListener('pointermove', handlePointerMove)
-      container.addEventListener('pointerleave', handlePointerLeave)
+      pointerTarget.addEventListener('pointermove', handlePointerMove)
+      pointerTarget.addEventListener('pointerleave', handlePointerLeave)
       rafId = requestAnimationFrame(draw)
     }
 
     return () => {
       cancelAnimationFrame(rafId)
       resizeObserver.disconnect()
-      container.removeEventListener('pointermove', handlePointerMove)
-      container.removeEventListener('pointerleave', handlePointerLeave)
+      pointerTarget.removeEventListener('pointermove', handlePointerMove)
+      pointerTarget.removeEventListener('pointerleave', handlePointerLeave)
     }
   }, [])
 
