@@ -73,6 +73,7 @@ resource "aws_lambda_function" "trakt_poller" {
     variables = {
       TRAKT_CLIENT_ID = var.trakt_client_id
       TRAKT_USERNAME  = var.trakt_username
+      TMDB_API_KEY    = var.tmdb_api_key
       SITE_BUCKET     = aws_s3_bucket.site.id
     }
   }

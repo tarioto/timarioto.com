@@ -28,7 +28,7 @@
 
 .card {
   display: block;
-  padding: 1.5rem;
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 12px;
   transition:
@@ -39,6 +39,17 @@
 .card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
+}
+
+.poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: var(--border);
+}
+
+.cardBody {
+  padding: 1rem 1.25rem;
 }
 
 .kicker {
@@ -64,6 +75,7 @@
 
 .arrow {
   color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 .description {

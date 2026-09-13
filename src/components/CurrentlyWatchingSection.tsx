@@ -7,6 +7,7 @@ interface WatchedMovie {
   year: number
   watchedAt: string
   url: string
+  posterUrl: string | null
 }
 
 interface WatchedEpisode {
@@ -16,6 +17,7 @@ interface WatchedEpisode {
   episodeTitle: string
   watchedAt: string
   url: string
+  posterUrl: string | null
 }
 
 interface TraktActivity {
@@ -53,21 +55,31 @@ export default function CurrentlyWatchingSection() {
       <div className={styles.grid}>
         {activity.movie && (
           <a className={styles.card} href={activity.movie.url} target="_blank" rel="noopener noreferrer">
-            <span className={styles.kicker}>Last movie</span>
-            <span className={styles.cardTitle}>
-              {activity.movie.title} ({activity.movie.year})
-              <ArrowUpRightIcon className={styles.arrow} />
-            </span>
+            {activity.movie.posterUrl && (
+              <img className={styles.poster} src={activity.movie.posterUrl} alt="" width={342} height={513} />
+            )}
+            <div className={styles.cardBody}>
+              <span className={styles.kicker}>Last movie</span>
+              <span className={styles.cardTitle}>
+                {activity.movie.title} ({activity.movie.year})
+                <ArrowUpRightIcon className={styles.arrow} />
+              </span>
+            </div>
           </a>
         )}
         {activity.show && (
           <a className={styles.card} href={activity.show.url} target="_blank" rel="noopener noreferrer">
-            <span className={styles.kicker}>Last episode</span>
-            <span className={styles.cardTitle}>
-              {activity.show.title} S{activity.show.season}E{activity.show.episode}
-              <ArrowUpRightIcon className={styles.arrow} />
-            </span>
-            <p className={styles.description}>{activity.show.episodeTitle}</p>
+            {activity.show.posterUrl && (
+              <img className={styles.poster} src={activity.show.posterUrl} alt="" width={342} height={513} />
+            )}
+            <div className={styles.cardBody}>
+              <span className={styles.kicker}>Last episode</span>
+              <span className={styles.cardTitle}>
+                {activity.show.title} S{activity.show.season}E{activity.show.episode}
+                <ArrowUpRightIcon className={styles.arrow} />
+              </span>
+              <p className={styles.description}>{activity.show.episodeTitle}</p>
+            </div>
           </a>
         )}
       </div>
