@@ -1,4 +1,5 @@
 import ContactSection from './components/ContactSection'
+import CurrentlyListeningSection from './components/CurrentlyListeningSection'
 import CurrentlyWatchingSection from './components/CurrentlyWatchingSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
@@ -34,6 +35,7 @@ export default function App() {
         <ResumeSection resumeUrl={RESUME_URL} />
         <ProjectsSection projects={projects} />
         <WeatherSection />
+        <CurrentlyListeningSection />
         <CurrentlyWatchingSection />
         <ContactSection {...contact} />
       </main>
