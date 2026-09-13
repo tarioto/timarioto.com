@@ -39,3 +39,15 @@ variable "tmdb_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "weather_api_key" {
+  description = "OpenWeatherMap API key, used by the weather poller Lambda."
+  type        = string
+  sensitive   = true
+}
+
+variable "weather_zip" {
+  description = "Postal code (OpenWeatherMap zip,country format) the weather poller Lambda fetches conditions for."
+  type        = string
+  default     = "8057,CH"
+}

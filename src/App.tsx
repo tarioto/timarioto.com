@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import Hero from './components/Hero'
 import ProjectsSection from './components/ProjectsSection'
 import ResumeSection from './components/ResumeSection'
+import WeatherSection from './components/WeatherSection'
 import type { Project } from './components/ProjectCard'
 import type { ContactInfo } from './components/ContactLinks'
 
@@ -32,6 +33,7 @@ export default function App() {
       <main>
         <ResumeSection resumeUrl={RESUME_URL} />
         <ProjectsSection projects={projects} />
+        <WeatherSection />
         <CurrentlyWatchingSection />
         <ContactSection {...contact} />
       </main>

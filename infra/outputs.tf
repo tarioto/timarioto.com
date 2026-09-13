@@ -27,3 +27,8 @@ output "trakt_poller_function_name" {
   description = "Name of the scheduled Trakt poller Lambda, for manual invocation (aws lambda invoke)."
   value       = aws_lambda_function.trakt_poller.function_name
 }
+
+output "weather_poller_function_name" {
+  description = "Name of the scheduled weather poller Lambda, for manual invocation (aws lambda invoke)."
+  value       = aws_lambda_function.weather_poller.function_name
+}
