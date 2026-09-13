@@ -82,7 +82,7 @@ resource "aws_lambda_function" "trakt_poller" {
 resource "aws_cloudwatch_event_rule" "trakt_poller_schedule" {
   name                = "trakt-poller-schedule"
   description         = "Triggers the Trakt activity poller Lambda."
-  schedule_expression = "rate(30 minutes)"
+  schedule_expression = "rate(1 day)"
 }
 
 resource "aws_cloudwatch_event_target" "trakt_poller" {
