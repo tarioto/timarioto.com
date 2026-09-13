@@ -33,3 +33,9 @@ variable "trakt_username" {
   type        = string
   default     = "tima925"
 }
+
+variable "tmdb_api_key" {
+  description = "TMDB (The Movie Database) v3 API key, used by the poller Lambda to look up poster art."
+  type        = string
+  sensitive   = true
+}
