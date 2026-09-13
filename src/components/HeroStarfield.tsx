@@ -176,17 +176,6 @@ export default function HeroStarfield() {
       hoverOpacity += ((hoverActive ? 1 : 0) - hoverOpacity) * HOVER_FADE_EASE
 
       const hue = (timeMs / 1000) * HOVER_HUE_SPEED_DEG_PER_SEC
-      if (hoverOpacity > 0.01) {
-        const glowRadius = HOVER_RADIUS_PX * 1.6
-        const glow = ctx!.createRadialGradient(hoverCurrent.x, hoverCurrent.y, 0, hoverCurrent.x, hoverCurrent.y, glowRadius)
-        glow.addColorStop(0, `hsla(${hue}, 85%, 70%, ${0.35 * hoverOpacity})`)
-        glow.addColorStop(1, 'hsla(0, 0%, 0%, 0)')
-        ctx!.save()
-        ctx!.globalCompositeOperation = 'lighter'
-        ctx!.fillStyle = glow
-        ctx!.fillRect(0, 0, width, height)
-        ctx!.restore()
-      }
 
       const t = prefersReducedMotion ? 0 : timeMs / 1000
       for (const star of sceneRef.current.stars) {
