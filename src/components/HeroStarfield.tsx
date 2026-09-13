@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import styles from './HeroStarfield.module.css'
-import { useVisitorSky } from '../hooks/useVisitorSky'
+import { useVisitorWeather } from '../hooks/useVisitorWeather'
 import { equatorialToHorizontal, projectToDome } from '../lib/skyPosition'
 import { skyGradientForTemp } from '../lib/skyGradient'
 import starsData from '../data/stars.json'
@@ -79,7 +79,7 @@ function projectScene(lat: number, lon: number): ProjectedScene {
 }
 
 export default function HeroStarfield() {
-  const sky = useVisitorSky()
+  const sky = useVisitorWeather()
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sceneRef = useRef<ProjectedScene>({ stars: [], lines: [] })
@@ -226,7 +226,7 @@ export default function HeroStarfield() {
     }
   }, [])
 
-  const gradient = skyGradientForTemp(sky.status === 'loading' ? null : sky.tempC)
+  const gradient = skyGradientForTemp(sky.status === 'loading' ? null : (sky.current?.tempC ?? null))
 
   return (
     <div ref={containerRef} className={styles.container} aria-hidden="true">
