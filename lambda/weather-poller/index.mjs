@@ -14,20 +14,28 @@ function dailyForecast(list, skipDate) {
     if (date === skipDate) continue
 
     const hour = Number(time.split(':')[0])
-    const existing = byDate.get(date)
-    if (!existing || Math.abs(hour - 12) < Math.abs(existing.hour - 12)) {
-      byDate.set(date, { hour, entry })
+    let day = byDate.get(date)
+    if (!day) {
+      day = { tempMinC: entry.main.temp_min, tempMaxC: entry.main.temp_max, noonEntry: entry, noonHour: hour }
+      byDate.set(date, day)
+    } else {
+      day.tempMinC = Math.min(day.tempMinC, entry.main.temp_min)
+      day.tempMaxC = Math.max(day.tempMaxC, entry.main.temp_max)
+      if (Math.abs(hour - 12) < Math.abs(day.noonHour - 12)) {
+        day.noonEntry = entry
+        day.noonHour = hour
+      }
     }
   }
 
   return Array.from(byDate.entries())
     .slice(0, FORECAST_DAYS)
-    .map(([date, { entry }]) => ({
+    .map(([date, day]) => ({
       date,
-      tempMinC: Math.round(entry.main.temp_min),
-      tempMaxC: Math.round(entry.main.temp_max),
-      description: entry.weather[0]?.description ?? '',
-      icon: entry.weather[0]?.icon ?? null,
+      tempMinC: Math.round(day.tempMinC),
+      tempMaxC: Math.round(day.tempMaxC),
+      description: day.noonEntry.weather[0]?.description ?? '',
+      icon: day.noonEntry.weather[0]?.icon ?? null,
     }))
 }
 
