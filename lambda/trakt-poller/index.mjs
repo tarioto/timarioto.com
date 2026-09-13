@@ -22,6 +22,7 @@ export const handler = async () => {
       'Content-Type': 'application/json',
       'trakt-api-version': '2',
       'trakt-api-key': clientId,
+      'User-Agent': 'timarioto.com-trakt-poller/1.0 (+https://timarioto.com)',
     },
   })
 
