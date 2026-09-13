@@ -1,8 +1,16 @@
 .hero {
+  position: relative;
+  overflow: hidden;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
   max-width: 720px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
@@ -12,11 +20,12 @@
   font-size: 3rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: #f5f5f7;
 }
 
 .tagline {
   margin-top: 0.75rem;
-  color: var(--text-muted);
+  color: rgb(245 245 247 / 72%);
   font-size: 1.25rem;
 }
 
@@ -63,6 +72,6 @@
 
 .buttonSecondary {
   composes: button;
-  border: 1px solid var(--border);
-  color: var(--text);
+  border: 1px solid rgb(245 245 247 / 35%);
+  color: #f5f5f7;
 }
