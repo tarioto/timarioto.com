@@ -1,4 +1,5 @@
 import ContactSection from './components/ContactSection'
+import CurrentlyWatchingSection from './components/CurrentlyWatchingSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
 import ProjectsSection from './components/ProjectsSection'
@@ -31,6 +32,7 @@ export default function App() {
       <main>
         <ResumeSection resumeUrl={RESUME_URL} />
         <ProjectsSection projects={projects} />
+        <CurrentlyWatchingSection />
         <ContactSection {...contact} />
       </main>
       <Footer name={NAME} year={new Date().getFullYear()} {...contact} />

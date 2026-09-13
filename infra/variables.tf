@@ -21,3 +21,15 @@ variable "github_repository" {
   type        = string
   default     = "tarioto/timarioto.com"
 }
+
+variable "trakt_client_id" {
+  description = "Trakt API application client ID, used as the trakt-api-key header by the poller Lambda."
+  type        = string
+  sensitive   = true
+}
+
+variable "trakt_username" {
+  description = "Trakt username whose public watch history the poller Lambda reads."
+  type        = string
+  default     = "tarioto"
+}
