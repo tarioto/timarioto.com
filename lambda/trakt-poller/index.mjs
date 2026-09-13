@@ -19,13 +19,15 @@ export const handler = async () => {
 
   const response = await fetch(`${TRAKT_API}/users/${username}/history?limit=10`, {
     headers: {
+      'Content-Type': 'application/json',
       'trakt-api-version': '2',
       'trakt-api-key': clientId,
     },
   })
 
   if (!response.ok) {
-    throw new Error(`Trakt history request failed: ${response.status} ${response.statusText}`)
+    const body = await response.text()
+    throw new Error(`Trakt history request failed: ${response.status} ${response.statusText} - ${body}`)
   }
 
   const history = await response.json()
