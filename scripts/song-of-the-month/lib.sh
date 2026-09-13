@@ -5,7 +5,7 @@ set -euo pipefail
 SITE_BUCKET="${SITE_BUCKET:-timarioto-com-site}"
 AWS_PROFILE_NAME="${AWS_PROFILE_NAME:-song-of-the-month}"
 
-STATE_DIR="$HOME/Library/Application Support/song-of-the-month"
+STATE_DIR="${SONG_STATE_DIR:-$HOME/Library/Application Support/song-of-the-month}"
 SNAPSHOT_DIR="$STATE_DIR/snapshots"
 mkdir -p "$SNAPSHOT_DIR"
 
