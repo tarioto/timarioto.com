@@ -59,6 +59,7 @@ jobs:
         env:
           TF_VAR_trakt_client_id: ${{ secrets.TRAKT_CLIENT_ID }}
           TF_VAR_tmdb_api_key: ${{ secrets.TMDB_API_KEY }}
+          TF_VAR_weather_api_key: ${{ secrets.OPENWEATHER_API_KEY }}
         run: |
           set +e
           tofu plan -no-color -input=false -out=tfplan > plan_output.txt 2>&1
@@ -93,4 +94,5 @@ jobs:
         env:
           TF_VAR_trakt_client_id: ${{ secrets.TRAKT_CLIENT_ID }}
           TF_VAR_tmdb_api_key: ${{ secrets.TMDB_API_KEY }}
+          TF_VAR_weather_api_key: ${{ secrets.OPENWEATHER_API_KEY }}
         run: tofu apply -no-color -input=false -auto-approve
