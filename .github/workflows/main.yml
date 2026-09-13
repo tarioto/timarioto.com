@@ -70,8 +70,11 @@ jobs:
           # Root files (index.html, favicon.svg, resume.pdf) are not
           # fingerprinted — must revalidate so new deploys are picked up.
           # assets/* is excluded here so this pass never touches or deletes it.
+          # trakt.json is written independently by the scheduled poller Lambda
+          # and must survive site deploys.
           aws s3 sync ./dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete \
             --exclude "assets/*" \
+            --exclude "trakt.json" \
             --cache-control "no-cache"
           # Vite fingerprints everything under assets/ — safe to cache forever.
           aws s3 sync ./dist/assets/ s3://${{ secrets.AWS_S3_BUCKET }}/assets/ --delete \

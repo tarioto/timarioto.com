@@ -24,6 +24,7 @@ vite.config.d.ts
 
 # OpenTofu / Terraform
 **/.terraform/*
+infra/.archives/*
 *.tfstate
 *.tfstate.*
 crash.log

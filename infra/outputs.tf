@@ -22,3 +22,8 @@ output "deploy_role_arn" {
   description = "ARN of the OIDC role the CI deploy workflow assumes (role-to-assume)."
   value       = aws_iam_role.github_actions_deploy.arn
 }
+
+output "trakt_poller_function_name" {
+  description = "Name of the scheduled Trakt poller Lambda, for manual invocation (aws lambda invoke)."
+  value       = aws_lambda_function.trakt_poller.function_name
+}
