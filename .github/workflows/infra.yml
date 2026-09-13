@@ -4,12 +4,14 @@ on:
   pull_request:
     paths:
       - 'infra/**'
+      - 'lambda/**'
       - '.github/workflows/infra.yml'
   push:
     branches:
       - master
     paths:
       - 'infra/**'
+      - 'lambda/**'
       - '.github/workflows/infra.yml'
 
 # OIDC token to assume the AWS role; write PR comments with the plan.
