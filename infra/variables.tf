@@ -31,5 +31,5 @@ variable "trakt_client_id" {
 variable "trakt_username" {
   description = "Trakt username whose public watch history the poller Lambda reads."
   type        = string
-  default     = "tarioto"
+  default     = "tima925"
 }
