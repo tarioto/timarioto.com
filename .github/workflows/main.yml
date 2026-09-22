@@ -35,6 +35,9 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Check for unused files/exports/dependencies
+        run: yarn knip
+
       - name: Build static files
         run: yarn build
 

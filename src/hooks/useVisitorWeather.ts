@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useVisitorLocation, type VisitorLocationStatus } from './useVisitorLocation'
 import { describeWeatherCode } from '../lib/weatherCode'
 
-export interface CurrentConditions {
+interface CurrentConditions {
   tempC: number
   feelsLikeC: number
   description: string
@@ -11,7 +11,7 @@ export interface CurrentConditions {
   windKph: number
 }
 
-export interface ForecastDay {
+interface ForecastDay {
   date: string
   tempMinC: number
   tempMaxC: number
