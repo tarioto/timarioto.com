@@ -56,7 +56,13 @@ export default function CurrentlyWatchingSection() {
         {activity?.movie && (
           <a className="currently-watching-card" href={activity.movie.url} target="_blank" rel="noopener noreferrer">
             {activity.movie.posterUrl && (
-              <img className="currently-watching-poster" src={activity.movie.posterUrl} alt="" width={342} height={513} />
+              <img
+                className="currently-watching-poster"
+                src={activity.movie.posterUrl}
+                alt=""
+                width={342}
+                height={513}
+              />
             )}
             <div className="currently-watching-card-body">
               <span className="currently-watching-kicker">Last movie</span>
@@ -70,7 +76,13 @@ export default function CurrentlyWatchingSection() {
         {activity?.show && (
           <a className="currently-watching-card" href={activity.show.url} target="_blank" rel="noopener noreferrer">
             {activity.show.posterUrl && (
-              <img className="currently-watching-poster" src={activity.show.posterUrl} alt="" width={342} height={513} />
+              <img
+                className="currently-watching-poster"
+                src={activity.show.posterUrl}
+                alt=""
+                width={342}
+                height={513}
+              />
             )}
             <div className="currently-watching-card-body">
               <span className="currently-watching-kicker">Last episode</span>

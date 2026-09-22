@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 const WEATHER_API = 'https://api.openweathermap.org/data/2.5'
 const USER_AGENT = 'timarioto.com-weather-poller/1.0 (+https://timarioto.com)'
@@ -49,7 +49,9 @@ export const handler = async () => {
   })
   if (!currentResponse.ok) {
     const body = await currentResponse.text()
-    throw new Error(`OpenWeatherMap current weather request failed: ${currentResponse.status} ${currentResponse.statusText} - ${body}`)
+    throw new Error(
+      `OpenWeatherMap current weather request failed: ${currentResponse.status} ${currentResponse.statusText} - ${body}`,
+    )
   }
 
   const current = await currentResponse.json()
@@ -60,7 +62,9 @@ export const handler = async () => {
   )
   if (!forecastResponse.ok) {
     const body = await forecastResponse.text()
-    throw new Error(`OpenWeatherMap forecast request failed: ${forecastResponse.status} ${forecastResponse.statusText} - ${body}`)
+    throw new Error(
+      `OpenWeatherMap forecast request failed: ${forecastResponse.status} ${forecastResponse.statusText} - ${body}`,
+    )
   }
 
   const forecast = await forecastResponse.json()

@@ -31,7 +31,8 @@ Other scripts:
 
 ```bash
 bun run build  # type-check and build to dist/
-bun lint       # eslint
+bun lint       # biome check (lint + format check)
+bun format     # biome check --write (auto-fix lint + format)
 bun preview    # preview a production build locally
 ```
 

@@ -15,7 +15,9 @@ const GEOLOCATION_TIMEOUT_MS = 5000
 /** Resolves the visitor's coordinates via the browser Geolocation API, falling back to a fixed reference location. */
 export function useVisitorLocation(): VisitorLocation {
   const [location, setLocation] = useState<VisitorLocation>(() =>
-    'geolocation' in navigator ? { ...FALLBACK_LOCATION, status: 'loading' } : { ...FALLBACK_LOCATION, status: 'fallback' },
+    'geolocation' in navigator
+      ? { ...FALLBACK_LOCATION, status: 'loading' }
+      : { ...FALLBACK_LOCATION, status: 'fallback' },
   )
 
   useEffect(() => {

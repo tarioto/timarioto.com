@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 import './HeroStarfield.css'
-import { useVisitorWeather } from '../hooks/useVisitorWeather'
-import { equatorialToHorizontal, projectToDome } from '../lib/skyPosition'
-import { skyGradientForTemp } from '../lib/skyGradient'
-import starsData from '../data/stars.json'
 import constellationLinesData from '../data/constellationLines.json'
+import starsData from '../data/stars.json'
+import { useVisitorWeather } from '../hooks/useVisitorWeather'
+import { skyGradientForTemp } from '../lib/skyGradient'
+import { equatorialToHorizontal, projectToDome } from '../lib/skyPosition'
 
 type StarTuple = [number, number, number] // [raDeg, decDeg, magnitude]
 type LineSegment = [number, number][] // [raDeg, decDeg][]
@@ -59,7 +59,13 @@ function projectScene(lat: number, lon: number): ProjectedScene {
     const { altDeg, azDeg } = equatorialToHorizontal(star.ra, star.dec, lat, lon, now)
     if (altDeg <= 0) continue
     const point = projectToDome(altDeg, azDeg, 1)
-    stars.push({ x: point.x, y: point.y, mag: star.mag, twinklePhase: star.twinklePhase, twinkleSpeed: star.twinkleSpeed })
+    stars.push({
+      x: point.x,
+      y: point.y,
+      mag: star.mag,
+      twinklePhase: star.twinklePhase,
+      twinkleSpeed: star.twinkleSpeed,
+    })
   }
 
   const lines: { x: number; y: number }[][] = []
@@ -194,8 +200,7 @@ export default function HeroStarfield() {
         const drawSize = size + hoverBoost * 3
 
         ctx!.beginPath()
-        ctx!.fillStyle =
-          hoverBoost > 0.05 ? `hsla(${hue}, 90%, 82%, ${alpha})` : `rgba(255, 255, 255, ${alpha})`
+        ctx!.fillStyle = hoverBoost > 0.05 ? `hsla(${hue}, 90%, 82%, ${alpha})` : `rgba(255, 255, 255, ${alpha})`
         ctx!.arc(x, y, drawSize, 0, Math.PI * 2)
         ctx!.fill()
       }
@@ -230,7 +235,10 @@ export default function HeroStarfield() {
 
   return (
     <div ref={containerRef} className="hero-starfield-container" aria-hidden="true">
-      <div className="hero-starfield-gradient" style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }} />
+      <div
+        className="hero-starfield-gradient"
+        style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }}
+      />
       <canvas ref={canvasRef} className="hero-starfield-canvas" />
     </div>
   )

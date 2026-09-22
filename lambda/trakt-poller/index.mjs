@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 const TRAKT_API = 'https://api.trakt.tv'
 const TMDB_API = 'https://api.themoviedb.org/3'
