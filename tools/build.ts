@@ -19,7 +19,11 @@ if (!result.success) {
   process.exit(1)
 }
 
-await $`cp public/favicon.svg public/resume.pdf public/song.json public/album.json public/trakt.json public/weather.json dist/`
+// Copy through whatever's actually in public/, same as Vite's publicDir
+// passthrough — trakt.json/weather.json/song.json/album.json are gitignored
+// local-only samples (written for real by Lambda pollers / a local script,
+// never committed), so they won't exist in CI and that's fine.
+await $`cp -r public/. dist/`
 
 console.log(`Build complete — ${result.outputs.length} file(s) written to dist/`)
 for (const output of result.outputs) console.log(`  ${output.path}`)
