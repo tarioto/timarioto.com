@@ -1,4 +1,4 @@
-import styles from './WeatherSection.module.css'
+import './WeatherSection.css'
 import { useVisitorWeather } from '../hooks/useVisitorWeather'
 
 function dayLabel(date: string) {
@@ -11,29 +11,29 @@ export default function WeatherSection() {
   if (status === 'loading' || !current) return null
 
   return (
-    <section className={styles.section} aria-label="Weather">
-      <h2 className={styles.title}>Weather</h2>
-      <div className={styles.current}>
-        <span className={styles.currentIcon} role="img" aria-hidden="true">
+    <section className="weather-section" aria-label="Weather">
+      <h2 className="weather-section-title">Weather</h2>
+      <div className="weather-section-current">
+        <span className="weather-section-current-icon" role="img" aria-hidden="true">
           {current.icon}
         </span>
         <div>
-          <span className={styles.temp}>{Math.round(current.tempC)}°C</span>
-          <p className={styles.description}>
+          <span className="weather-section-temp">{Math.round(current.tempC)}°C</span>
+          <p className="weather-section-description">
             {current.description}
             {locationName ? ` in ${locationName}` : ' near you'}
           </p>
         </div>
       </div>
-      <div className={styles.forecast}>
+      <div className="weather-section-forecast">
         {forecast.map((day) => (
-          <div className={styles.forecastCard} key={day.date}>
-            <span className={styles.forecastDay}>{dayLabel(day.date)}</span>
-            <span className={styles.forecastIcon} role="img" aria-hidden="true">
+          <div className="weather-section-forecast-card" key={day.date}>
+            <span className="weather-section-forecast-day">{dayLabel(day.date)}</span>
+            <span className="weather-section-forecast-icon" role="img" aria-hidden="true">
               {day.icon}
             </span>
-            <span className={styles.forecastTemps}>
-              <span className={styles.forecastHigh}>{Math.round(day.tempMaxC)}°</span> {Math.round(day.tempMinC)}°
+            <span className="weather-section-forecast-temps">
+              <span className="weather-section-forecast-high">{Math.round(day.tempMaxC)}°</span> {Math.round(day.tempMinC)}°
             </span>
           </div>
         ))}

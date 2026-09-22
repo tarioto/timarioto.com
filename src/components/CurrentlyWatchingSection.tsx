@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
-import styles from './CurrentlyWatchingSection.module.css'
+import './CurrentlyWatchingSection.css'
 
 interface WatchedMovie {
   title: string
@@ -50,35 +50,35 @@ export default function CurrentlyWatchingSection() {
   if (!activity?.movie && !activity?.show) return null
 
   return (
-    <section className={styles.section} aria-label="Currently Watching">
-      <h2 className={styles.title}>Currently Watching</h2>
-      <div className={styles.grid}>
+    <section className="currently-watching-section" aria-label="Currently Watching">
+      <h2 className="currently-watching-title">Currently Watching</h2>
+      <div className="currently-watching-grid">
         {activity?.movie && (
-          <a className={styles.card} href={activity.movie.url} target="_blank" rel="noopener noreferrer">
+          <a className="currently-watching-card" href={activity.movie.url} target="_blank" rel="noopener noreferrer">
             {activity.movie.posterUrl && (
-              <img className={styles.poster} src={activity.movie.posterUrl} alt="" width={342} height={513} />
+              <img className="currently-watching-poster" src={activity.movie.posterUrl} alt="" width={342} height={513} />
             )}
-            <div className={styles.cardBody}>
-              <span className={styles.kicker}>Last movie</span>
-              <span className={styles.cardTitle}>
+            <div className="currently-watching-card-body">
+              <span className="currently-watching-kicker">Last movie</span>
+              <span className="currently-watching-card-title">
                 {activity.movie.title} ({activity.movie.year})
-                <ArrowUpRightIcon className={styles.arrow} />
+                <ArrowUpRightIcon className="currently-watching-arrow" />
               </span>
             </div>
           </a>
         )}
         {activity?.show && (
-          <a className={styles.card} href={activity.show.url} target="_blank" rel="noopener noreferrer">
+          <a className="currently-watching-card" href={activity.show.url} target="_blank" rel="noopener noreferrer">
             {activity.show.posterUrl && (
-              <img className={styles.poster} src={activity.show.posterUrl} alt="" width={342} height={513} />
+              <img className="currently-watching-poster" src={activity.show.posterUrl} alt="" width={342} height={513} />
             )}
-            <div className={styles.cardBody}>
-              <span className={styles.kicker}>Last episode</span>
-              <span className={styles.cardTitle}>
+            <div className="currently-watching-card-body">
+              <span className="currently-watching-kicker">Last episode</span>
+              <span className="currently-watching-card-title">
                 {activity.show.title} S{activity.show.season}E{activity.show.episode}
-                <ArrowUpRightIcon className={styles.arrow} />
+                <ArrowUpRightIcon className="currently-watching-arrow" />
               </span>
-              <p className={styles.description}>{activity.show.episodeTitle}</p>
+              <p className="currently-watching-description">{activity.show.episodeTitle}</p>
             </div>
           </a>
         )}

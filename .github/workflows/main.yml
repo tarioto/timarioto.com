@@ -20,26 +20,22 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install Node.js
-        uses: actions/setup-node@v7
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: '22.x'
-          cache: 'yarn'
+          bun-version: '1.4.2'
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: bun install --frozen-lockfile
 
       - name: Lint
-        run: yarn lint
+        run: bun run lint
 
       - name: Check for unused files/exports/dependencies
-        run: yarn knip
+        run: bun run knip
 
       - name: Build static files
-        run: yarn build
+        run: bun run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7

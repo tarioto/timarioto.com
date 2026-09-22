@@ -1,17 +1,17 @@
-.container {
+.hero-starfield-container {
   position: absolute;
   inset: 0;
   overflow: hidden;
   z-index: 0;
 }
 
-.gradient {
+.hero-starfield-gradient {
   position: absolute;
   inset: 0;
   transition: background 1.2s ease;
 }
 
-.canvas {
+.hero-starfield-canvas {
   position: absolute;
   inset: 0;
   display: block;

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import styles from './IconLink.module.css'
+import './IconLink.css'
 
 interface IconLinkProps {
   href: string
@@ -11,7 +11,7 @@ interface IconLinkProps {
 export default function IconLink({ href, label, icon, external = true }: IconLinkProps) {
   return (
     <a
-      className={styles.link}
+      className="icon-link"
       href={href}
       aria-label={label}
       title={label}

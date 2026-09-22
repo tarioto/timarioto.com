@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
-import styles from './CurrentlyListeningSection.module.css'
+import './CurrentlyListeningSection.css'
 
 interface SongOfTheMonth {
   updatedAt: string
@@ -62,39 +62,39 @@ export default function CurrentlyListeningSection() {
   if (!song && !album) return null
 
   return (
-    <section className={styles.section} aria-label="Currently Listening">
-      <h2 className={styles.title}>Currently Listening</h2>
-      <div className={styles.grid}>
+    <section className="currently-listening-section" aria-label="Currently Listening">
+      <h2 className="currently-listening-title">Currently Listening</h2>
+      <div className="currently-listening-grid">
         {song && (
-          <a className={styles.card} href={song.url} target="_blank" rel="noopener noreferrer">
+          <a className="currently-listening-card" href={song.url} target="_blank" rel="noopener noreferrer">
             {song.artworkUrl && (
-              <img className={styles.artwork} src={song.artworkUrl} alt="" width={600} height={600} />
+              <img className="currently-listening-artwork" src={song.artworkUrl} alt="" width={600} height={600} />
             )}
-            <div className={styles.cardBody}>
-              <span className={styles.kicker}>Song of the month</span>
-              <span className={styles.cardTitle}>
+            <div className="currently-listening-card-body">
+              <span className="currently-listening-kicker">Song of the month</span>
+              <span className="currently-listening-card-title">
                 {song.title}
-                <ArrowUpRightIcon className={styles.arrow} />
+                <ArrowUpRightIcon className="currently-listening-arrow" />
               </span>
               {playsDescription(song.artist, song.playCount) && (
-                <p className={styles.description}>{playsDescription(song.artist, song.playCount)}</p>
+                <p className="currently-listening-description">{playsDescription(song.artist, song.playCount)}</p>
               )}
             </div>
           </a>
         )}
         {album && (
-          <a className={styles.card} href={album.url} target="_blank" rel="noopener noreferrer">
+          <a className="currently-listening-card" href={album.url} target="_blank" rel="noopener noreferrer">
             {album.artworkUrl && (
-              <img className={styles.artwork} src={album.artworkUrl} alt="" width={600} height={600} />
+              <img className="currently-listening-artwork" src={album.artworkUrl} alt="" width={600} height={600} />
             )}
-            <div className={styles.cardBody}>
-              <span className={styles.kicker}>Album of the month</span>
-              <span className={styles.cardTitle}>
+            <div className="currently-listening-card-body">
+              <span className="currently-listening-kicker">Album of the month</span>
+              <span className="currently-listening-card-title">
                 {album.title}
-                <ArrowUpRightIcon className={styles.arrow} />
+                <ArrowUpRightIcon className="currently-listening-arrow" />
               </span>
               {playsDescription(album.artist, album.playCount) && (
-                <p className={styles.description}>{playsDescription(album.artist, album.playCount)}</p>
+                <p className="currently-listening-description">{playsDescription(album.artist, album.playCount)}</p>
               )}
             </div>
           </a>

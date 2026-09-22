@@ -1,4 +1,4 @@
-.link {
+.icon-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
     background 150ms ease;
 }
 
-.link:hover {
+.icon-link:hover {
   color: var(--accent);
   background: var(--border);
 }

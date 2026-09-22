@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from '../icons'
-import styles from './ProjectCard.module.css'
+import './ProjectCard.css'
 
 export interface Project {
   title: string
@@ -9,12 +9,12 @@ export interface Project {
 
 export default function ProjectCard({ title, description, url }: Project) {
   return (
-    <a className={styles.card} href={url} target="_blank" rel="noopener noreferrer">
-      <span className={styles.title}>
+    <a className="project-card" href={url} target="_blank" rel="noopener noreferrer">
+      <span className="project-card-title">
         {title}
-        <ArrowUpRightIcon className={styles.arrow} />
+        <ArrowUpRightIcon className="project-card-arrow" />
       </span>
-      <p className={styles.description}>{description}</p>
+      <p className="project-card-description">{description}</p>
     </a>
   )
 }

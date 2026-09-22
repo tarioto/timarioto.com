@@ -1,4 +1,4 @@
-import styles from './Hero.module.css'
+import './Hero.css'
 import HeroStarfield from './HeroStarfield'
 
 interface HeroProps {
@@ -9,16 +9,16 @@ interface HeroProps {
 
 export default function Hero({ name, tagline, resumeUrl }: HeroProps) {
   return (
-    <header className={styles.hero}>
+    <header className="hero">
       <HeroStarfield />
-      <div className={styles.content}>
-        <h1 className={styles.headline}>Hi, I&apos;m {name}.</h1>
-        <p className={styles.tagline}>{tagline}</p>
-        <div className={styles.actions}>
-          <a className={styles.buttonPrimary} href={resumeUrl} download target="_blank" rel="noopener noreferrer">
+      <div className="hero-content">
+        <h1 className="hero-headline">Hi, I&apos;m {name}.</h1>
+        <p className="hero-tagline">{tagline}</p>
+        <div className="hero-actions">
+          <a className="hero-button hero-button-primary" href={resumeUrl} download target="_blank" rel="noopener noreferrer">
             Download Résumé
           </a>
-          <a className={styles.buttonSecondary} href="#contact">
+          <a className="hero-button hero-button-secondary" href="#contact">
             Get in Touch
           </a>
         </div>

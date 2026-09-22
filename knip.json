@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["lambda/*/index.mjs"],
-  "project": ["src/**/*.{ts,tsx}", "lambda/**/*.mjs"],
+  "entry": ["index.html", "src/main.tsx", "tools/*.ts", "lambda/*/index.mjs"],
+  "project": ["src/**/*.{ts,tsx}", "tools/**/*.ts", "lambda/**/*.mjs"],
   "ignoreDependencies": ["@aws-sdk/client-s3"]
 }

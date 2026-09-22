@@ -1,4 +1,4 @@
-import styles from './ResumeSection.module.css'
+import './ResumeSection.css'
 
 interface ResumeSectionProps {
   resumeUrl: string
@@ -6,13 +6,13 @@ interface ResumeSectionProps {
 
 export default function ResumeSection({ resumeUrl }: ResumeSectionProps) {
   return (
-    <section className={styles.section} aria-label="Resume">
-      <h2 className={styles.title}>Resume</h2>
-      <div className={styles.body}>
-        <p className={styles.description}>
+    <section className="resume-section" aria-label="Resume">
+      <h2 className="resume-section-title">Resume</h2>
+      <div className="resume-section-body">
+        <p className="resume-section-description">
           A quick overview of my experience — download the full PDF or view it inline.
         </p>
-        <a className={styles.button} href={resumeUrl} download target="_blank" rel="noopener noreferrer">
+        <a className="resume-section-button" href={resumeUrl} download target="_blank" rel="noopener noreferrer">
           View Résumé
         </a>
       </div>
