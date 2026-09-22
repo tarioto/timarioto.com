@@ -1,11 +1,11 @@
-.section {
+.resume-section {
   max-width: 720px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
   border-top: 1px solid var(--border);
 }
 
-.title {
+.resume-section-title {
   font-size: 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -13,7 +13,7 @@
   color: var(--text-muted);
 }
 
-.body {
+.resume-section-body {
   margin-top: 1rem;
   display: flex;
   align-items: center;
@@ -21,13 +21,13 @@
   flex-wrap: wrap;
 }
 
-.description {
+.resume-section-description {
   color: var(--text-muted);
   margin: 0;
   flex: 1 1 320px;
 }
 
-.button {
+.resume-section-button {
   display: inline-block;
   padding: 0.65rem 1.25rem;
   border-radius: 8px;
@@ -38,7 +38,7 @@
     box-shadow 150ms ease;
 }
 
-.button:hover {
+.resume-section-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
 }

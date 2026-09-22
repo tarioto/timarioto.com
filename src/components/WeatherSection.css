@@ -1,11 +1,11 @@
-.section {
+.weather-section {
   max-width: 720px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
   border-top: 1px solid var(--border);
 }
 
-.title {
+.weather-section-title {
   font-size: 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -13,32 +13,32 @@
   color: var(--text-muted);
 }
 
-.current {
+.weather-section-current {
   margin-top: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.currentIcon {
+.weather-section-current-icon {
   flex-shrink: 0;
   font-size: 3.5rem;
   line-height: 1;
 }
 
-.temp {
+.weather-section-temp {
   font-size: 2.5rem;
   font-weight: 600;
   color: var(--text);
 }
 
-.description {
+.weather-section-description {
   margin: 0.25rem 0 0;
   color: var(--text-muted);
   text-transform: capitalize;
 }
 
-.forecast {
+.weather-section-forecast {
   margin-top: 1.5rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -46,12 +46,12 @@
 }
 
 @media (max-width: 640px) {
-  .forecast {
+  .weather-section-forecast {
     grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   }
 }
 
-.forecastCard {
+.weather-section-forecast-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,24 +61,24 @@
   border-radius: 12px;
 }
 
-.forecastDay {
+.weather-section-forecast-day {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-muted);
 }
 
-.forecastIcon {
+.weather-section-forecast-icon {
   font-size: 1.5rem;
   line-height: 1;
 }
 
-.forecastTemps {
+.weather-section-forecast-temps {
   font-size: 0.9rem;
   color: var(--text-muted);
 }
 
-.forecastHigh {
+.weather-section-forecast-high {
   color: var(--text);
   font-weight: 600;
 }

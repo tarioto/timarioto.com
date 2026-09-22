@@ -3,11 +3,12 @@
 ![CI](https://github.com/tarioto/timarioto.com/workflows/CI/badge.svg)
 
 Source for [timarioto.com](https://timarioto.com), a personal site built with
-React, TypeScript, and Vite.
+React, TypeScript, and Bun.
 
 ## Stack
 
-- **React 19 + TypeScript**, bundled with **Vite**
+- **React 19 + TypeScript**, bundled with **Bun** (`Bun.build()`/`Bun.serve()`
+  via [`tools/`](tools) — no Vite/webpack)
 - Static site served from **S3** behind **CloudFront**, provisioned with
   **OpenTofu** (see [`infra/`](infra))
 - A couple of small **AWS Lambda** pollers (see [`lambda/`](lambda)) keep
@@ -19,20 +20,19 @@ React, TypeScript, and Vite.
 
 ## Getting started
 
-Requires Node 22 and Yarn (via Corepack).
+Requires [Bun](https://bun.sh).
 
 ```bash
-corepack enable
-yarn install
-yarn dev       # start the local dev server
+bun install
+bun dev        # start the local dev server
 ```
 
 Other scripts:
 
 ```bash
-yarn build     # type-check and build to dist/
-yarn lint      # eslint
-yarn preview   # preview a production build locally
+bun run build  # type-check and build to dist/
+bun lint       # eslint
+bun preview    # preview a production build locally
 ```
 
 ## Project layout
@@ -40,6 +40,7 @@ yarn preview   # preview a production build locally
 ```
 src/            React app (components, hooks, and data for the site)
 public/         Static assets, plus JSON files written by pollers/scripts at runtime
+tools/          Bun dev/build/preview scripts (replace Vite)
 infra/          OpenTofu (Terraform-compatible) infrastructure — see infra/README.md
 lambda/         Scheduled pollers that write trakt.json / weather.json
 scripts/        Local automation, e.g. song-of-the-month publishing

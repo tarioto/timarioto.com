@@ -1,5 +1,5 @@
 import ProjectCard, { type Project } from './ProjectCard'
-import styles from './ProjectsSection.module.css'
+import './ProjectsSection.css'
 
 interface ProjectsSectionProps {
   projects: Project[]
@@ -7,9 +7,9 @@ interface ProjectsSectionProps {
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
-    <section className={styles.section} aria-label="Projects">
-      <h2 className={styles.title}>Projects</h2>
-      <div className={styles.grid}>
+    <section className="projects-section" aria-label="Projects">
+      <h2 className="projects-section-title">Projects</h2>
+      <div className="projects-section-grid">
         {projects.map((project) => (
           <ProjectCard key={project.url} {...project} />
         ))}

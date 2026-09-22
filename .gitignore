@@ -6,8 +6,8 @@
 # Local sample data for testing poller-fed sections. trakt.json/weather.json
 # are written to the deployed S3 bucket by scheduled Lambdas; song.json/
 # album.json are written by the local script in scripts/song-of-the-month/.
-# None of these are built by Vite — drop sample copies here for local dev,
-# never commit real ones.
+# None of these are built by the build script — drop sample copies here for
+# local dev, never commit real ones.
 /public/trakt.json
 /public/weather.json
 /public/song.json
@@ -16,21 +16,12 @@
 # dependencies
 /node_modules
 
-# Yarn (Berry / PnP, non-zero-install)
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
-
 # TypeScript incremental build info
 *.tsbuildinfo
 
-# TypeScript-emitted config artifacts (from `tsc -b`)
-vite.config.js
-vite.config.d.ts
+# TypeScript-emitted tooling artifacts (from `tsc -b`)
+tools/*.js
+tools/*.d.ts
 
 # OpenTofu / Terraform
 **/.terraform/*
@@ -48,8 +39,6 @@ terraform.rc
 
 # logs
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # IDEs and editors
 /.idea
