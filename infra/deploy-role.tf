@@ -5,7 +5,7 @@ data "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 }
 
-# Trust: only this repo, only the master branch, only the GitHub OIDC audience.
+# Trust: only this repo, only the main branch, only the GitHub OIDC audience.
 data "aws_iam_policy_document" "deploy_assume" {
   statement {
     effect  = "Allow"
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "deploy_assume" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:ref:refs/heads/master"]
+      values   = ["repo:${var.github_repository}:ref:refs/heads/main"]
     }
   }
 }
