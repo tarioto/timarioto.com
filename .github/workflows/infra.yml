@@ -8,7 +8,7 @@ on:
       - '.github/workflows/infra.yml'
   push:
     branches:
-      - master
+      - main
     paths:
       - 'infra/**'
       - 'lambda/**'
@@ -90,7 +90,7 @@ jobs:
           exit "${{ steps.plan.outputs.exitcode }}"
 
       - name: tofu apply
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           TF_VAR_trakt_client_id: ${{ secrets.TRAKT_CLIENT_ID }}
           TF_VAR_tmdb_api_key: ${{ secrets.TMDB_API_KEY }}
