@@ -19,20 +19,19 @@ React, TypeScript, and Vite.
 
 ## Getting started
 
-Requires Node 22 and Yarn (via Corepack).
+Requires [Bun](https://bun.sh).
 
 ```bash
-corepack enable
-yarn install
-yarn dev       # start the local dev server
+bun install
+bun dev        # start the local dev server
 ```
 
 Other scripts:
 
 ```bash
-yarn build     # type-check and build to dist/
-yarn lint      # eslint
-yarn preview   # preview a production build locally
+bun run build  # type-check and build to dist/
+bun lint       # eslint
+bun preview    # preview a production build locally
 ```
 
 ## Project layout

@@ -42,7 +42,7 @@ After apply, capture the outputs and push content:
 
 ```bash
 tofu output          # note s3_bucket + cloudfront_distribution_id
-cd .. && yarn build
+cd .. && bun run build
 aws s3 sync ./dist/ s3://<s3_bucket>/ --delete
 aws cloudfront create-invalidation --distribution-id <id> --paths "/*"
 ```
