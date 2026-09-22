@@ -33,7 +33,8 @@ export default function WeatherSection() {
               {day.icon}
             </span>
             <span className="weather-section-forecast-temps">
-              <span className="weather-section-forecast-high">{Math.round(day.tempMaxC)}°</span> {Math.round(day.tempMinC)}°
+              <span className="weather-section-forecast-high">{Math.round(day.tempMaxC)}°</span>{' '}
+              {Math.round(day.tempMinC)}°
             </span>
           </div>
         ))}

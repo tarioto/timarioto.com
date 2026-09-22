@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useVisitorLocation, type VisitorLocationStatus } from './useVisitorLocation'
 import { describeWeatherCode } from '../lib/weatherCode'
+import { useVisitorLocation, type VisitorLocationStatus } from './useVisitorLocation'
 
 interface CurrentConditions {
   tempC: number
