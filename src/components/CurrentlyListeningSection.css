@@ -1,11 +1,11 @@
-.section {
+.currently-listening-section {
   max-width: 720px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
   border-top: 1px solid var(--border);
 }
 
-.title {
+.currently-listening-title {
   font-size: 1.5rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -13,7 +13,7 @@
   color: var(--text-muted);
 }
 
-.grid {
+.currently-listening-grid {
   margin-top: 1.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 320px));
@@ -22,12 +22,12 @@
 }
 
 @media (max-width: 640px) {
-  .grid {
+  .currently-listening-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.card {
+.currently-listening-card {
   display: block;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -37,12 +37,12 @@
     box-shadow 150ms ease;
 }
 
-.card:hover {
+.currently-listening-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
 }
 
-.artwork {
+.currently-listening-artwork {
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
@@ -50,11 +50,11 @@
   background: var(--border);
 }
 
-.cardBody {
+.currently-listening-card-body {
   padding: 1rem 1.25rem;
 }
 
-.kicker {
+.currently-listening-kicker {
   display: block;
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -62,7 +62,7 @@
   color: var(--text-muted);
 }
 
-.cardTitle {
+.currently-listening-card-title {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -71,16 +71,16 @@
   color: var(--text);
 }
 
-.card:hover .cardTitle {
+.currently-listening-card:hover .currently-listening-card-title {
   color: var(--accent);
 }
 
-.arrow {
+.currently-listening-arrow {
   color: var(--text-muted);
   flex-shrink: 0;
 }
 
-.description {
+.currently-listening-description {
   margin: 0.5rem 0 0;
   color: var(--text-muted);
   font-size: 0.95rem;

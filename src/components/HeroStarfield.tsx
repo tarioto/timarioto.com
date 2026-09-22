@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import styles from './HeroStarfield.module.css'
+import './HeroStarfield.css'
 import { useVisitorWeather } from '../hooks/useVisitorWeather'
 import { equatorialToHorizontal, projectToDome } from '../lib/skyPosition'
 import { skyGradientForTemp } from '../lib/skyGradient'
@@ -229,9 +229,9 @@ export default function HeroStarfield() {
   const gradient = skyGradientForTemp(sky.status === 'loading' ? null : (sky.current?.tempC ?? null))
 
   return (
-    <div ref={containerRef} className={styles.container} aria-hidden="true">
-      <div className={styles.gradient} style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }} />
-      <canvas ref={canvasRef} className={styles.canvas} />
+    <div ref={containerRef} className="hero-starfield-container" aria-hidden="true">
+      <div className="hero-starfield-gradient" style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }} />
+      <canvas ref={canvasRef} className="hero-starfield-canvas" />
     </div>
   )
 }

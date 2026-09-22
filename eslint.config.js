@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'vite.config.js', 'vite.config.d.ts'] },
+  { ignores: ['dist'] },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

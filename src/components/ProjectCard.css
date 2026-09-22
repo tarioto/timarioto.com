@@ -1,4 +1,4 @@
-.card {
+.project-card {
   display: block;
   padding: 1.5rem;
   border: 1px solid var(--border);
@@ -8,12 +8,12 @@
     box-shadow 150ms ease;
 }
 
-.card:hover {
+.project-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
 }
 
-.title {
+.project-card-title {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -21,15 +21,15 @@
   color: var(--text);
 }
 
-.card:hover .title {
+.project-card:hover .project-card-title {
   color: var(--accent);
 }
 
-.arrow {
+.project-card-arrow {
   color: var(--text-muted);
 }
 
-.description {
+.project-card-description {
   margin: 0.5rem 0 0;
   color: var(--text-muted);
   font-size: 0.95rem;

@@ -1,5 +1,5 @@
 import ContactLinks, { type ContactInfo } from './ContactLinks'
-import styles from './Footer.module.css'
+import './Footer.css'
 
 interface FooterProps extends ContactInfo {
   name: string
@@ -8,9 +8,9 @@ interface FooterProps extends ContactInfo {
 
 export default function Footer({ name, year, ...contact }: FooterProps) {
   return (
-    <footer className={styles.footer}>
+    <footer className="footer">
       <ContactLinks {...contact} />
-      <p className={styles.copyright}>
+      <p className="footer-copyright">
         © {year} {name}
       </p>
     </footer>
