@@ -27,6 +27,31 @@ function playsDescription(artist: string | null, playCount: number | null) {
   return [artist, plays].filter(Boolean).join(' · ') || null
 }
 
+// Square artwork with a headphones placeholder for when there's no artwork
+// URL (the iTunes lookup found no catalog match) or the image fails to load.
+function Artwork({ src }: { src: string | null }) {
+  const [failed, setFailed] = useState(false)
+
+  if (!src || failed) {
+    return (
+      <div className="currently-listening-artwork currently-listening-artwork-fallback" aria-hidden="true">
+        🎧
+      </div>
+    )
+  }
+
+  return (
+    <img
+      className="currently-listening-artwork"
+      src={src}
+      alt=""
+      width={600}
+      height={600}
+      onError={() => setFailed(true)}
+    />
+  )
+}
+
 export default function CurrentlyListeningSection() {
   const [song, setSong] = useState<SongOfTheMonth | null>(null)
   const [album, setAlbum] = useState<AlbumOfTheMonth | null>(null)
@@ -67,9 +92,7 @@ export default function CurrentlyListeningSection() {
       <div className="currently-listening-grid">
         {song && (
           <a className="currently-listening-card" href={song.url} target="_blank" rel="noopener noreferrer">
-            {song.artworkUrl && (
-              <img className="currently-listening-artwork" src={song.artworkUrl} alt="" width={600} height={600} />
-            )}
+            <Artwork src={song.artworkUrl} />
             <div className="currently-listening-card-body">
               <span className="currently-listening-kicker">Song of the month</span>
               <span className="currently-listening-card-title">
@@ -84,9 +107,7 @@ export default function CurrentlyListeningSection() {
         )}
         {album && (
           <a className="currently-listening-card" href={album.url} target="_blank" rel="noopener noreferrer">
-            {album.artworkUrl && (
-              <img className="currently-listening-artwork" src={album.artworkUrl} alt="" width={600} height={600} />
-            )}
+            <Artwork src={album.artworkUrl} />
             <div className="currently-listening-card-body">
               <span className="currently-listening-kicker">Album of the month</span>
               <span className="currently-listening-card-title">
