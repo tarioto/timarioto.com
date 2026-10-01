@@ -13,6 +13,8 @@ on:
       - 'infra/**'
       - 'lambda/**'
       - '.github/workflows/infra.yml'
+  # Manual "refresh now" button: re-runs the pollers without applying.
+  workflow_dispatch:
 
 # OIDC token to assume the AWS role; write PR comments with the plan.
 permissions:
@@ -96,3 +98,23 @@ jobs:
           TF_VAR_tmdb_api_key: ${{ secrets.TMDB_API_KEY }}
           TF_VAR_weather_api_key: ${{ secrets.OPENWEATHER_API_KEY }}
         run: tofu apply -no-color -input=false -auto-approve
+
+      # Refresh trakt.json/weather.json right away instead of waiting for the
+      # next scheduled run. Pollers are idempotent, so run them after every
+      # apply. A failing third-party API shouldn't fail the deploy.
+      - name: Invoke pollers
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          status=0
+          for fn in trakt-poller weather-poller; do
+            error="$(aws lambda invoke --region us-west-2 --function-name "$fn" \
+              --query FunctionError --output text /tmp/$fn.json)" || { status=1; continue; }
+            if [ "$error" != "None" ]; then
+              echo "::warning::$fn failed: $(cat /tmp/$fn.json)"
+              status=1
+            else
+              echo "$fn ran successfully"
+            fi
+          done
+          exit "$status"
