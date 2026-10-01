@@ -12,6 +12,9 @@ OUT_FILE="$SNAPSHOT_DIR/$TODAY.json"
 
 log "Snapshotting Apple Music play counts to $OUT_FILE"
 
+TMP_FILE="$(mktemp)"
+trap 'rm -f "$TMP_FILE"' EXIT
+
 osascript -l JavaScript -e '
   const Music = Application("Music")
   const played = Music.tracks.whose({ playedCount: { ">": 0 } })
@@ -25,7 +28,12 @@ osascript -l JavaScript -e '
     out.push({ id: ids[i], name: names[i], artist: artists[i], album: albums[i], count: counts[i] })
   }
   JSON.stringify(out)
-' > "$OUT_FILE"
+' > "$TMP_FILE"
+
+# Only replace the snapshot once osascript has produced valid JSON, so a
+# timeout never leaves an empty file behind.
+jq -e 'type == "array"' "$TMP_FILE" > /dev/null
+mv "$TMP_FILE" "$OUT_FILE"
 
 TRACK_COUNT="$(jq 'length' "$OUT_FILE")"
 log "Wrote $TRACK_COUNT played tracks."

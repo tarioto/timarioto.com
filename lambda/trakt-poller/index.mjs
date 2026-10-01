@@ -31,24 +31,28 @@ export const handler = async () => {
   const tmdbApiKey = process.env.TMDB_API_KEY
   const bucket = process.env.SITE_BUCKET
 
-  const response = await fetch(`${TRAKT_API}/users/${username}/history?limit=10`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'trakt-api-version': '2',
-      'trakt-api-key': clientId,
-      'User-Agent': 'timarioto.com-trakt-poller/1.0 (+https://timarioto.com)',
-    },
-  })
+  // Query movies and episodes separately — a combined history page can be
+  // all episodes after a binge, which would hide the most recent movie.
+  const fetchLatest = async (type) => {
+    const response = await fetch(`${TRAKT_API}/users/${username}/history/${type}?limit=1`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'trakt-api-version': '2',
+        'trakt-api-key': clientId,
+        'User-Agent': 'timarioto.com-trakt-poller/1.0 (+https://timarioto.com)',
+      },
+    })
 
-  if (!response.ok) {
-    const body = await response.text()
-    throw new Error(`Trakt history request failed: ${response.status} ${response.statusText} - ${body}`)
+    if (!response.ok) {
+      const body = await response.text()
+      throw new Error(`Trakt ${type} history request failed: ${response.status} ${response.statusText} - ${body}`)
+    }
+
+    const [item] = await response.json()
+    return item ?? null
   }
 
-  const history = await response.json()
-
-  const movieItem = history.find((item) => item.type === 'movie')
-  const episodeItem = history.find((item) => item.type === 'episode')
+  const [movieItem, episodeItem] = await Promise.all([fetchLatest('movies'), fetchLatest('episodes')])
 
   const [moviePoster, showPoster] = await Promise.all([
     movieItem ? fetchTmdbPoster('movie', movieItem.movie.ids.tmdb, tmdbApiKey) : null,
