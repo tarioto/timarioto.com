@@ -42,6 +42,7 @@
 
   .hero-actions {
     flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -62,8 +63,19 @@
 
 .hero-button-secondary {
   position: relative;
-  display: inline-block;
-  width: 400px;
-  height: 56px;
+  white-space: nowrap;
   color: #f5f5f7;
+}
+
+.hero-button-secondary:hover {
+  color: #f5f5f7;
+}
+
+.hero-button-sizer {
+  visibility: hidden;
+}
+
+.hero-button-secondary .glass > div {
+  /* biome-ignore lint/complexity/noImportantStyles: liquid-glass-react hardcodes an inline 20px system-ui font on its label. */
+  font: inherit !important;
 }

@@ -18,7 +18,11 @@ export default function Hero({ name, tagline }: HeroProps) {
         <h1 className="hero-headline">Hi, I&apos;m {name}.</h1>
         <p className="hero-tagline">{tagline}</p>
         <div className="hero-actions">
-          <a className="hero-button-secondary" href="#contact">
+          <a className="hero-button hero-button-secondary" href="#contact">
+            {/* LiquidGlass is absolutely positioned, so this hidden copy of the label sizes the link. */}
+            <span className="hero-button-sizer" aria-hidden="true">
+              Get in Touch
+            </span>
             <LiquidGlass
               cornerRadius={8}
               padding="0.75rem 1.5rem"
