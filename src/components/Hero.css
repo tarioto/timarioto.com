@@ -60,15 +60,6 @@
   box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
 }
 
-.hero-button-primary {
-  background: var(--accent);
-  color: #ffffff;
-}
-
-.hero-button-primary:hover {
-  color: #ffffff;
-}
-
 .hero-button-secondary {
   border: 1px solid rgb(245 245 247 / 35%);
   color: #f5f5f7;

@@ -6,11 +6,9 @@ import Footer from './components/Footer'
 import Hero from './components/Hero'
 import type { Project } from './components/ProjectCard'
 import ProjectsSection from './components/ProjectsSection'
-import ResumeSection from './components/ResumeSection'
 import WeatherSection from './components/WeatherSection'
 
 const NAME = 'Tim Arioto'
-const RESUME_URL = '/resume.pdf'
 
 const contact: ContactInfo = {
   email: 'timarioto@gmail.com',
@@ -30,9 +28,8 @@ const projects: Project[] = [
 export default function App() {
   return (
     <>
-      <Hero name={NAME} tagline="Software engineer building products end-to-end." resumeUrl={RESUME_URL} />
+      <Hero name={NAME} tagline="Software engineer building products end-to-end." />
       <main>
-        <ResumeSection resumeUrl={RESUME_URL} />
         <ProjectsSection projects={projects} />
         <WeatherSection />
         <CurrentlyListeningSection />
