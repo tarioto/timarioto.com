@@ -6,6 +6,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # Bun is pinned to 1.3.x (packageManager + CI) because Dependabot can't
+      # handle 1.4 yet; keep the types in lockstep with the runtime.
+      - dependency-name: "@types/bun"
+        versions: [">=1.4.0"]
     groups:
       # One PR for all non-major bumps to cut noise; majors stay separate.
       minor-and-patch:
