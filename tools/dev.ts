@@ -1,6 +1,6 @@
 import homepage from '../index.html'
 
-const publicFiles = ['favicon.svg', 'resume.pdf', 'song.json', 'album.json', 'trakt.json', 'weather.json'] as const
+const publicFiles = ['favicon.svg', 'song.json', 'album.json', 'trakt.json', 'weather.json'] as const
 
 const server = Bun.serve({
   development: { hmr: true, console: true },

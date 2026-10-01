@@ -66,7 +66,7 @@ jobs:
 
       - name: Deploy static files to S3 bucket
         run: |
-          # Root files (index.html, favicon.svg, resume.pdf) are not
+          # Root files (index.html, favicon.svg) are not
           # fingerprinted — must revalidate so new deploys are picked up.
           # assets/* is excluded here so this pass never touches or deletes it.
           # trakt.json and weather.json are written independently by the
