@@ -28,7 +28,11 @@ export default function Hero({ name, tagline, resumeUrl }: HeroProps) {
           >
             Download Résumé
           </a>
-          <a className="hero-button-secondary" href="#contact">
+          <a className="hero-button hero-button-secondary" href="#contact">
+            {/* LiquidGlass is absolutely positioned, so this hidden copy of the label sizes the link. */}
+            <span className="hero-button-sizer" aria-hidden="true">
+              Get in Touch
+            </span>
             <LiquidGlass
               cornerRadius={8}
               padding="0.75rem 1.5rem"
