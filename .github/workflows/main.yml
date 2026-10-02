@@ -34,6 +34,9 @@ jobs:
       - name: Check for unused files/exports/dependencies
         run: bun run knip
 
+      - name: Test
+        run: bun test
+
       - name: Build static files
         run: bun run build
 
