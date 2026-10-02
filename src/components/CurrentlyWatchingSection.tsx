@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
 import './CurrentlyWatchingSection.css'
 import GlassCard from './GlassCard'
+import PageGlass from './PageGlass'
 
 interface WatchedMovie {
   title: string
@@ -76,7 +77,8 @@ export default function CurrentlyWatchingSection() {
   if (!activity?.movie && !activity?.show) return null
 
   return (
-    <section className="currently-watching-section" aria-label="Currently Watching">
+    <section className="currently-watching-section page-section" aria-label="Currently Watching">
+      <PageGlass />
       <h2 className="currently-watching-title">Currently Watching</h2>
       <div className="currently-watching-grid">
         {activity?.movie && (

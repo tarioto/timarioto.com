@@ -1,7 +1,6 @@
 import LiquidGlass from 'liquid-glass-react'
 import { useRef } from 'react'
 import './Hero.css'
-import HeroStarfield from './HeroStarfield'
 
 interface HeroProps {
   name: string
@@ -13,7 +12,6 @@ export default function Hero({ name, tagline }: HeroProps) {
 
   return (
     <header className="hero" ref={heroRef}>
-      <HeroStarfield />
       <div className="hero-content">
         <h1 className="hero-headline">Hi, I&apos;m {name}.</h1>
         <p className="hero-tagline">{tagline}</p>
@@ -29,7 +27,7 @@ export default function Hero({ name, tagline }: HeroProps) {
               displacementScale={64}
               blurAmount={0.1}
               saturation={130}
-              elasticity={0.25}
+              elasticity={0}
               mouseContainer={heroRef}
               style={{ position: 'absolute', top: '50%', left: '50%' }}
             >

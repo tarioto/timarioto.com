@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
 import './CurrentlyListeningSection.css'
 import GlassCard from './GlassCard'
+import PageGlass from './PageGlass'
 
 interface SongOfTheMonth {
   updatedAt: string
@@ -88,7 +89,8 @@ export default function CurrentlyListeningSection() {
   if (!song && !album) return null
 
   return (
-    <section className="currently-listening-section" aria-label="Currently Listening">
+    <section className="currently-listening-section page-section" aria-label="Currently Listening">
+      <PageGlass />
       <h2 className="currently-listening-title">Currently Listening</h2>
       <div className="currently-listening-grid">
         {song && (

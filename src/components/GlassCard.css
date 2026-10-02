@@ -8,14 +8,6 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--border);
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.glass-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
 }
 
 /* Scaled up so the blur's soft edges fall outside the card. */
@@ -40,10 +32,14 @@
   flex-direction: column;
 }
 
-/* liquid-glass-react outlines the glass with highlight spans, which read as a
-   box inside the card now that the glass runs edge to edge. */
-.glass-card-panel > span {
-  display: none;
+/* liquid-glass-react sizes its outline layers from a one-off measurement
+   (starting at a hardcoded 270×69); size them to the panel instead. */
+.glass-card-panel > span,
+.glass-card-panel > div:not(.glass-card-body) {
+  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
+  width: 100% !important;
+  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
+  height: 100% !important;
 }
 
 .glass-card-glass .glass {

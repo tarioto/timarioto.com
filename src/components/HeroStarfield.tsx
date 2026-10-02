@@ -212,22 +212,22 @@ export default function HeroStarfield() {
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(container)
 
-    // Listen on the hero itself, not just this (background) layer: the
-    // headline/tagline/buttons render in a sibling on top of the canvas, so
-    // pointer events over them would never reach a listener on `container`.
-    const pointerTarget = container.parentElement ?? container
+    // Listen on the whole page, not this (background) layer: every section
+    // renders on top of the canvas, so pointer events over them would never
+    // reach a listener on `container`.
+    const leaveTarget = document.documentElement
 
     if (!prefersReducedMotion) {
-      pointerTarget.addEventListener('pointermove', handlePointerMove)
-      pointerTarget.addEventListener('pointerleave', handlePointerLeave)
+      window.addEventListener('pointermove', handlePointerMove)
+      leaveTarget.addEventListener('pointerleave', handlePointerLeave)
       rafId = requestAnimationFrame(draw)
     }
 
     return () => {
       cancelAnimationFrame(rafId)
       resizeObserver.disconnect()
-      pointerTarget.removeEventListener('pointermove', handlePointerMove)
-      pointerTarget.removeEventListener('pointerleave', handlePointerLeave)
+      window.removeEventListener('pointermove', handlePointerMove)
+      leaveTarget.removeEventListener('pointerleave', handlePointerLeave)
     }
   }, [])
 

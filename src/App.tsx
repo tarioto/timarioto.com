@@ -4,6 +4,7 @@ import CurrentlyListeningSection from './components/CurrentlyListeningSection'
 import CurrentlyWatchingSection from './components/CurrentlyWatchingSection'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
+import HeroStarfield from './components/HeroStarfield'
 import type { Project } from './components/ProjectCard'
 import ProjectsSection from './components/ProjectsSection'
 import WeatherSection from './components/WeatherSection'
@@ -28,6 +29,7 @@ const projects: Project[] = [
 export default function App() {
   return (
     <>
+      <HeroStarfield />
       <Hero name={NAME} tagline="Software engineer building products end-to-end." />
       <main>
         <ProjectsSection projects={projects} />

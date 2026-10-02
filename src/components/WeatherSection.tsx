@@ -1,5 +1,6 @@
 import './WeatherSection.css'
 import { useVisitorWeather } from '../hooks/useVisitorWeather'
+import PageGlass from './PageGlass'
 
 function dayLabel(date: string) {
   return new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short' })
@@ -11,7 +12,8 @@ export default function WeatherSection() {
   if (status === 'loading' || !current) return null
 
   return (
-    <section className="weather-section" aria-label="Weather">
+    <section className="weather-section page-section" aria-label="Weather">
+      <PageGlass />
       <h2 className="weather-section-title">Weather</h2>
       <div className="weather-section-current">
         <span className="weather-section-current-icon" role="img" aria-hidden="true">

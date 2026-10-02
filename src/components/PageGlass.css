@@ -1,0 +1,61 @@
+.page-glass {
+  display: none;
+}
+
+/* The starfield sits fixed behind the whole page, so in light mode each
+   section sits on a clear liquid-glass panel. `:root` outranks each
+   section's own border and margin. */
+@media (prefers-color-scheme: light) {
+  :root .page-section {
+    position: relative;
+    width: calc(100% - 2rem);
+    margin-bottom: 1.5rem;
+    border-top: none;
+
+    /* The sky behind the clear glass is always dark, so the panels use light
+       text whatever the page theme; sections color their text from these. */
+    --text: #f5f5f7;
+    --text-muted: rgb(245 245 247 / 0.78);
+    --border: rgb(255 255 255 / 0.22);
+    --accent: #a5b4ff;
+
+    color: var(--text);
+    text-shadow: 0 1px 6px rgb(0 0 0 / 0.45);
+  }
+
+  /* Pointer-events off because the library's overlay layers expect
+     Tailwind's pointer-events-none, which this site doesn't load, and would
+     otherwise swallow clicks on the section's links. */
+  .page-glass {
+    display: block;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    pointer-events: none;
+  }
+
+  /* liquid-glass-react sizes its outline layers from a one-off measurement
+     (starting at a hardcoded 270×69); size them to the panel instead. */
+  .page-glass > span,
+  .page-glass > div {
+    /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
+    width: 100% !important;
+    /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
+    height: 100% !important;
+  }
+
+  /* Lift the section's content above the glass, which comes first. (Sinking
+     the glass with a negative z-index instead needs an isolated stacking
+     context, which cuts its backdrop blur off from the starfield.) */
+  .page-section > :not(.page-glass) {
+    position: relative;
+  }
+
+  .page-glass .glass {
+    width: 100%;
+    height: 100%;
+    /* biome-ignore lint/complexity/noImportantStyles: liquid-glass-react hardcodes an inline drop shadow on the glass. */
+    box-shadow: none !important;
+  }
+}
