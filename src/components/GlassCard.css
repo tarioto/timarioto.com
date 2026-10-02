@@ -32,29 +32,10 @@
   flex-direction: column;
 }
 
-/* liquid-glass-react sizes its outline layers from a one-off measurement
-   (starting at a hardcoded 270×69); size them to the panel instead. */
-.glass-card-panel > span,
-.glass-card-panel > div:not(.glass-card-body) {
-  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
-  width: 100% !important;
-  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
-  height: 100% !important;
-}
-
-.glass-card-glass .glass {
-  width: 100%;
-  height: 100%;
-  /* biome-ignore lint/complexity/noImportantStyles: liquid-glass-react hardcodes an inline drop shadow on the glass. */
-  box-shadow: none !important;
-}
-
-/* Text over the blurred artwork is always light, whatever the page theme. */
+/* A stronger shadow than the page's, since bright artwork can sit right
+   behind the clear glass. */
 .glass-card-body {
-  position: relative;
   flex: 1;
   padding: 0.75rem 1rem;
-  background: rgb(0 0 0 / 0.45);
-  color: #fff;
-  text-shadow: 0 1px 8px rgb(0 0 0 / 0.5);
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
 }

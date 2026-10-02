@@ -48,7 +48,7 @@
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgb(255 255 255 / 0.8);
+  color: var(--text-muted);
 }
 
 .currently-listening-card-title {
@@ -57,16 +57,20 @@
   gap: 0.4rem;
   margin-top: 0.1rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--text);
+}
+
+.glass-card:hover .currently-listening-card-title {
+  color: var(--accent);
 }
 
 .currently-listening-arrow {
-  color: rgb(255 255 255 / 0.8);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
 .currently-listening-description {
   margin: 0.1rem 0 0;
-  color: rgb(255 255 255 / 0.8);
+  color: var(--text-muted);
   font-size: 0.95rem;
 }

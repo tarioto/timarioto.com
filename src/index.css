@@ -56,25 +56,6 @@ button {
   font: inherit;
 }
 
-/* The starfield sits fixed behind the whole page, so each section sits on a
-   liquid-glass panel (GlassBacking) over it. `:root` outranks each section's
-   own border and margin. */
-:root .page-section {
-  width: calc(100% - 2rem);
-  margin-bottom: 1.5rem;
-  border-top: none;
-
-  /* The sky behind the glass is always dark, so the panels use light text
-     whatever the page theme; sections color their text from these. */
-  --text: #f5f5f7;
-  --text-muted: rgb(245 245 247 / 0.78);
-  --border: rgb(255 255 255 / 0.22);
-  --accent: #a5b4ff;
-
-  color: var(--text);
-  text-shadow: 0 1px 6px rgb(0 0 0 / 0.45);
-}
-
 img,
 svg {
   display: block;

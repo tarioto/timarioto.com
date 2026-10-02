@@ -1,20 +1,20 @@
 /* Fixed behind the whole page, so every section scrolls over the sky. A
    negative z-index keeps it above the body background but below all
    content without each section needing its own stacking context. */
-.hero-starfield-container {
+.starfield-container {
   position: fixed;
   inset: 0;
   overflow: hidden;
   z-index: -1;
 }
 
-.hero-starfield-gradient {
+.starfield-gradient {
   position: absolute;
   inset: 0;
   transition: background 1.2s ease;
 }
 
-.hero-starfield-canvas {
+.starfield-canvas {
   position: absolute;
   inset: 0;
   display: block;

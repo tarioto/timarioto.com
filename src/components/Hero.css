@@ -54,31 +54,11 @@
 }
 
 .hero-button-secondary {
-  position: relative;
   white-space: nowrap;
   color: #f5f5f7;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.45);
 }
 
 .hero-button-secondary:hover {
   color: #f5f5f7;
-}
-
-.hero-button-sizer {
-  visibility: hidden;
-}
-
-/* liquid-glass-react sizes its outline layers from a one-off measurement,
-   starting at a hardcoded 270×69 and animating down to the real size, which
-   looks like the button zooming in on load; size them to the button instead. */
-.hero-button-secondary > span:not(.hero-button-sizer),
-.hero-button-secondary > div:not(.relative) {
-  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
-  width: 100% !important;
-  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
-  height: 100% !important;
-}
-
-.hero-button-secondary .glass > div {
-  /* biome-ignore lint/complexity/noImportantStyles: liquid-glass-react hardcodes an inline 20px system-ui font on its label. */
-  font: inherit !important;
 }
