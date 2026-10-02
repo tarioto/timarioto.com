@@ -1,7 +1,8 @@
 version: 2
 updates:
-  # Application dependencies (Yarn / npm).
-  - package-ecosystem: npm
+  # Application dependencies. The project is managed by Bun (bun.lock), which
+  # Dependabot's npm ecosystem refuses to update.
+  - package-ecosystem: bun
     directory: /
     schedule:
       interval: weekly
