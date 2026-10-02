@@ -9,7 +9,7 @@ interface FooterProps extends ContactInfo {
 
 export default function Footer({ name, year, ...contact }: FooterProps) {
   return (
-    <PageSection as="footer" className="footer">
+    <PageSection as="footer" className="footer" glass={false}>
       <ContactLinks {...contact} />
       <p className="footer-copyright">
         © {year} {name}
