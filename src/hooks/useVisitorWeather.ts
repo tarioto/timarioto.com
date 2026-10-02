@@ -87,7 +87,7 @@ async function fetchLocationName(lat: number, lon: number, signal: AbortSignal):
   }
 }
 
-/** Live weather for the visitor's own location (Open-Meteo), shared by the Hero starfield and the Weather section. */
+/** Live weather for the visitor's own location (Open-Meteo), shared by the starfield and the Weather section. */
 export function useVisitorWeather(): VisitorWeather {
   const location = useVisitorLocation()
   const [data, setData] = useState<FetchedWeather & { locationName: string | null }>({

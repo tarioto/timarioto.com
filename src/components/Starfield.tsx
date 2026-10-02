@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import './HeroStarfield.css'
+import './Starfield.css'
 import constellationLinesData from '../data/constellationLines.json'
 import starsData from '../data/stars.json'
 import { useVisitorWeather } from '../hooks/useVisitorWeather'
@@ -84,7 +84,7 @@ function projectScene(lat: number, lon: number): ProjectedScene {
   return { stars, lines }
 }
 
-export default function HeroStarfield() {
+export default function Starfield() {
   const sky = useVisitorWeather()
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -212,34 +212,36 @@ export default function HeroStarfield() {
     const resizeObserver = new ResizeObserver(resize)
     resizeObserver.observe(container)
 
-    // Listen on the hero itself, not just this (background) layer: the
-    // headline/tagline/buttons render in a sibling on top of the canvas, so
-    // pointer events over them would never reach a listener on `container`.
-    const pointerTarget = container.parentElement ?? container
+    // Listen on the whole page, not this (background) layer: every section
+    // renders on top of the canvas, so pointer events over them would never
+    // reach a listener on `container`. pointerleave doesn't fire on `window`,
+    // so it's taken from the root element, which the pointer leaves when it
+    // leaves the page.
+    const page = document.documentElement
 
     if (!prefersReducedMotion) {
-      pointerTarget.addEventListener('pointermove', handlePointerMove)
-      pointerTarget.addEventListener('pointerleave', handlePointerLeave)
+      window.addEventListener('pointermove', handlePointerMove)
+      page.addEventListener('pointerleave', handlePointerLeave)
       rafId = requestAnimationFrame(draw)
     }
 
     return () => {
       cancelAnimationFrame(rafId)
       resizeObserver.disconnect()
-      pointerTarget.removeEventListener('pointermove', handlePointerMove)
-      pointerTarget.removeEventListener('pointerleave', handlePointerLeave)
+      window.removeEventListener('pointermove', handlePointerMove)
+      page.removeEventListener('pointerleave', handlePointerLeave)
     }
   }, [])
 
   const gradient = skyGradientForTemp(sky.status === 'loading' ? null : (sky.current?.tempC ?? null))
 
   return (
-    <div ref={containerRef} className="hero-starfield-container" aria-hidden="true">
+    <div ref={containerRef} className="starfield-container" aria-hidden="true">
       <div
-        className="hero-starfield-gradient"
+        className="starfield-gradient"
         style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }}
       />
-      <canvas ref={canvasRef} className="hero-starfield-canvas" />
+      <canvas ref={canvasRef} className="starfield-canvas" />
     </div>
   )
 }

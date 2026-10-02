@@ -1,5 +1,5 @@
+import GlassBacking from './GlassBacking'
 import './Hero.css'
-import HeroStarfield from './HeroStarfield'
 
 interface HeroProps {
   name: string
@@ -9,13 +9,13 @@ interface HeroProps {
 export default function Hero({ name, tagline }: HeroProps) {
   return (
     <header className="hero">
-      <HeroStarfield />
       <div className="hero-content">
         <h1 className="hero-headline">Hi, I&apos;m {name}.</h1>
         <p className="hero-tagline">{tagline}</p>
         <div className="hero-actions">
           <a className="hero-button hero-button-secondary" href="#contact">
-            Get in Touch
+            <GlassBacking radius={8} />
+            <span>Get in Touch</span>
           </a>
         </div>
       </div>

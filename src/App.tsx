@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import Hero from './components/Hero'
 import type { Project } from './components/ProjectCard'
 import ProjectsSection from './components/ProjectsSection'
+import Starfield from './components/Starfield'
 import WeatherSection from './components/WeatherSection'
 
 const NAME = 'Tim Arioto'
@@ -28,6 +29,7 @@ const projects: Project[] = [
 export default function App() {
   return (
     <>
+      <Starfield />
       <Hero name={NAME} tagline="Software engineer building products end-to-end." />
       <main>
         <ProjectsSection projects={projects} />

@@ -1,5 +1,7 @@
 import './WeatherSection.css'
 import { useVisitorWeather } from '../hooks/useVisitorWeather'
+import GlassBacking from './GlassBacking'
+import PageSection from './PageSection'
 
 function dayLabel(date: string) {
   return new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: 'short' })
@@ -11,7 +13,7 @@ export default function WeatherSection() {
   if (status === 'loading' || !current) return null
 
   return (
-    <section className="weather-section" aria-label="Weather">
+    <PageSection className="weather-section" aria-label="Weather">
       <h2 className="weather-section-title">Weather</h2>
       <div className="weather-section-current">
         <span className="weather-section-current-icon" role="img" aria-hidden="true">
@@ -28,6 +30,7 @@ export default function WeatherSection() {
       <div className="weather-section-forecast">
         {forecast.map((day) => (
           <div className="weather-section-forecast-card" key={day.date}>
+            <GlassBacking radius={12} />
             <span className="weather-section-forecast-day">{dayLabel(day.date)}</span>
             <span className="weather-section-forecast-icon" role="img" aria-hidden="true">
               {day.icon}
@@ -39,6 +42,6 @@ export default function WeatherSection() {
           </div>
         ))}
       </div>
-    </section>
+    </PageSection>
   )
 }

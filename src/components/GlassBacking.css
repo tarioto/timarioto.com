@@ -1,0 +1,57 @@
+/* Pointer-events off because the library's overlay layers expect Tailwind's
+   pointer-events-none, which this site doesn't load, and would otherwise
+   swallow clicks on the parent's links. */
+.glass-backing {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--glass-radius);
+  pointer-events: none;
+}
+
+/* Lift the parent's other content above the backing, which comes first.
+   (Sinking the backing with a negative z-index instead needs an isolated
+   stacking context, which cuts its backdrop blur off from the starfield.)
+   Wrapped in :where() so any component's own positioning still wins. */
+:where(:has(> .glass-backing)) {
+  position: relative;
+}
+
+:where(:has(> .glass-backing) > :not(.glass-backing)) {
+  position: relative;
+}
+
+/* The selectors below reach into liquid-glass-react's markup, which isn't a
+   public API; the package is pinned to an exact version in package.json.
+
+   The library sizes its outline layers from its own measurement, starting
+   at a hardcoded 270×69; size them to the backing instead. */
+.glass-backing > span,
+.glass-backing > div {
+  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
+  width: 100% !important;
+  /* biome-ignore lint/complexity/noImportantStyles: the library sets these sizes inline. */
+  height: 100% !important;
+}
+
+.glass-backing .glass {
+  width: 100%;
+  height: 100%;
+  /* biome-ignore lint/complexity/noImportantStyles: liquid-glass-react hardcodes an inline drop shadow on the glass. */
+  box-shadow: none !important;
+}
+
+/* Dark mode: the same glass, tinted slightly darker. A backing nested inside
+   another one already sits on that outer tint, so it isn't tinted again. */
+@media (prefers-color-scheme: dark) {
+  .glass-backing::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0.25);
+  }
+
+  .glass-backing ~ * .glass-backing::after {
+    content: none;
+  }
+}
