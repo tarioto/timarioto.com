@@ -27,21 +27,6 @@
   }
 }
 
-.currently-listening-card {
-  display: block;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.currently-listening-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
-}
-
 .currently-listening-artwork {
   width: 100%;
   height: auto;
@@ -58,38 +43,30 @@
   user-select: none;
 }
 
-.currently-listening-card-body {
-  padding: 1rem 1.25rem;
-}
-
 .currently-listening-kicker {
   display: block;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: rgb(255 255 255 / 0.8);
 }
 
 .currently-listening-card-title {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  margin-top: 0.4rem;
+  margin-top: 0.1rem;
   font-weight: 600;
-  color: var(--text);
-}
-
-.currently-listening-card:hover .currently-listening-card-title {
-  color: var(--accent);
+  color: #fff;
 }
 
 .currently-listening-arrow {
-  color: var(--text-muted);
+  color: rgb(255 255 255 / 0.8);
   flex-shrink: 0;
 }
 
 .currently-listening-description {
-  margin: 0.5rem 0 0;
-  color: var(--text-muted);
+  margin: 0.1rem 0 0;
+  color: rgb(255 255 255 / 0.8);
   font-size: 0.95rem;
 }

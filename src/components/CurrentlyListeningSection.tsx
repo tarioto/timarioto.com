@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
 import './CurrentlyListeningSection.css'
+import GlassCard from './GlassCard'
 
 interface SongOfTheMonth {
   updatedAt: string
@@ -91,34 +92,28 @@ export default function CurrentlyListeningSection() {
       <h2 className="currently-listening-title">Currently Listening</h2>
       <div className="currently-listening-grid">
         {song && (
-          <a className="currently-listening-card" href={song.url} target="_blank" rel="noopener noreferrer">
-            <Artwork src={song.artworkUrl} />
-            <div className="currently-listening-card-body">
-              <span className="currently-listening-kicker">Song of the month</span>
-              <span className="currently-listening-card-title">
-                {song.title}
-                <ArrowUpRightIcon className="currently-listening-arrow" />
-              </span>
-              {playsDescription(song.artist, song.playCount) && (
-                <p className="currently-listening-description">{playsDescription(song.artist, song.playCount)}</p>
-              )}
-            </div>
-          </a>
+          <GlassCard href={song.url} media={<Artwork src={song.artworkUrl} />} backdropSrc={song.artworkUrl}>
+            <span className="currently-listening-kicker">Song of the month</span>
+            <span className="currently-listening-card-title">
+              {song.title}
+              <ArrowUpRightIcon className="currently-listening-arrow" />
+            </span>
+            {playsDescription(song.artist, song.playCount) && (
+              <p className="currently-listening-description">{playsDescription(song.artist, song.playCount)}</p>
+            )}
+          </GlassCard>
         )}
         {album && (
-          <a className="currently-listening-card" href={album.url} target="_blank" rel="noopener noreferrer">
-            <Artwork src={album.artworkUrl} />
-            <div className="currently-listening-card-body">
-              <span className="currently-listening-kicker">Album of the month</span>
-              <span className="currently-listening-card-title">
-                {album.title}
-                <ArrowUpRightIcon className="currently-listening-arrow" />
-              </span>
-              {playsDescription(album.artist, album.playCount) && (
-                <p className="currently-listening-description">{playsDescription(album.artist, album.playCount)}</p>
-              )}
-            </div>
-          </a>
+          <GlassCard href={album.url} media={<Artwork src={album.artworkUrl} />} backdropSrc={album.artworkUrl}>
+            <span className="currently-listening-kicker">Album of the month</span>
+            <span className="currently-listening-card-title">
+              {album.title}
+              <ArrowUpRightIcon className="currently-listening-arrow" />
+            </span>
+            {playsDescription(album.artist, album.playCount) && (
+              <p className="currently-listening-description">{playsDescription(album.artist, album.playCount)}</p>
+            )}
+          </GlassCard>
         )}
       </div>
     </section>

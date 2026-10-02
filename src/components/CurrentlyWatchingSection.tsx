@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
 import './CurrentlyWatchingSection.css'
+import GlassCard from './GlassCard'
 
 interface WatchedMovie {
   title: string
@@ -24,6 +25,31 @@ interface TraktActivity {
   updatedAt: string
   movie: WatchedMovie | null
   show: WatchedEpisode | null
+}
+
+// Poster with a clapperboard placeholder for when Trakt has no poster for the
+// title or the image fails to load.
+function Poster({ src }: { src: string | null }) {
+  const [failed, setFailed] = useState(false)
+
+  if (!src || failed) {
+    return (
+      <div className="currently-watching-poster currently-watching-poster-fallback" aria-hidden="true">
+        🎬
+      </div>
+    )
+  }
+
+  return (
+    <img
+      className="currently-watching-poster"
+      src={src}
+      alt=""
+      width={342}
+      height={513}
+      onError={() => setFailed(true)}
+    />
+  )
 }
 
 export default function CurrentlyWatchingSection() {
@@ -54,45 +80,31 @@ export default function CurrentlyWatchingSection() {
       <h2 className="currently-watching-title">Currently Watching</h2>
       <div className="currently-watching-grid">
         {activity?.movie && (
-          <a className="currently-watching-card" href={activity.movie.url} target="_blank" rel="noopener noreferrer">
-            {activity.movie.posterUrl && (
-              <img
-                className="currently-watching-poster"
-                src={activity.movie.posterUrl}
-                alt=""
-                width={342}
-                height={513}
-              />
-            )}
-            <div className="currently-watching-card-body">
-              <span className="currently-watching-kicker">Last movie</span>
-              <span className="currently-watching-card-title">
-                {activity.movie.title} ({activity.movie.year})
-                <ArrowUpRightIcon className="currently-watching-arrow" />
-              </span>
-            </div>
-          </a>
+          <GlassCard
+            href={activity.movie.url}
+            media={<Poster src={activity.movie.posterUrl} />}
+            backdropSrc={activity.movie.posterUrl}
+          >
+            <span className="currently-watching-kicker">Last movie</span>
+            <span className="currently-watching-card-title">
+              {activity.movie.title} ({activity.movie.year})
+              <ArrowUpRightIcon className="currently-watching-arrow" />
+            </span>
+          </GlassCard>
         )}
         {activity?.show && (
-          <a className="currently-watching-card" href={activity.show.url} target="_blank" rel="noopener noreferrer">
-            {activity.show.posterUrl && (
-              <img
-                className="currently-watching-poster"
-                src={activity.show.posterUrl}
-                alt=""
-                width={342}
-                height={513}
-              />
-            )}
-            <div className="currently-watching-card-body">
-              <span className="currently-watching-kicker">Last episode</span>
-              <span className="currently-watching-card-title">
-                {activity.show.title} S{activity.show.season}E{activity.show.episode}
-                <ArrowUpRightIcon className="currently-watching-arrow" />
-              </span>
-              <p className="currently-watching-description">{activity.show.episodeTitle}</p>
-            </div>
-          </a>
+          <GlassCard
+            href={activity.show.url}
+            media={<Poster src={activity.show.posterUrl} />}
+            backdropSrc={activity.show.posterUrl}
+          >
+            <span className="currently-watching-kicker">Last episode</span>
+            <span className="currently-watching-card-title">
+              {activity.show.title} S{activity.show.season}E{activity.show.episode}
+              <ArrowUpRightIcon className="currently-watching-arrow" />
+            </span>
+            <p className="currently-watching-description">{activity.show.episodeTitle}</p>
+          </GlassCard>
         )}
       </div>
     </section>
