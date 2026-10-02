@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
 import './CurrentlyListeningSection.css'
+import GlassBacking from './GlassBacking'
 import GlassCard from './GlassCard'
-import PageGlass from './PageGlass'
 
 interface SongOfTheMonth {
   updatedAt: string
@@ -90,7 +90,7 @@ export default function CurrentlyListeningSection() {
 
   return (
     <section className="currently-listening-section page-section" aria-label="Currently Listening">
-      <PageGlass />
+      <GlassBacking />
       <h2 className="currently-listening-title">Currently Listening</h2>
       <div className="currently-listening-grid">
         {song && (

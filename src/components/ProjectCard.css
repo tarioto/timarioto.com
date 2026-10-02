@@ -1,7 +1,6 @@
 .project-card {
   display: block;
   padding: 1.5rem;
-  border: 1px solid var(--border);
   border-radius: 12px;
 }
 
