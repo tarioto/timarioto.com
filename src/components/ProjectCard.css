@@ -1,26 +1,82 @@
 .project-card {
-  display: block;
-  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
   border-radius: 12px;
 }
 
-.project-card-title {
+.project-card-screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Static so the title's stretched overlay below is sized to the card rather
+   than to this body (GlassBacking.css positions the card's direct children). */
+.project-card-body {
+  position: static;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.project-card-header {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.project-card-title {
   font-weight: 600;
   color: var(--text);
 }
 
-.project-card:hover .project-card-title {
+/* Covers the whole card, making it one big link to the live site. */
+.project-card-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 12px;
+}
+
+.project-card-title:focus-visible {
+  outline: none;
+}
+
+.project-card-title:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Positioned so the title stays painted above the glass backing. */
+.project-card-title-text {
+  position: relative;
+}
+
+.project-card-title:hover {
   color: var(--accent);
 }
 
 .project-card-arrow {
+  display: inline-block;
+  margin-left: 0.4rem;
+  vertical-align: -0.05em;
   color: var(--text-muted);
 }
 
+/* Lifted above the title's overlay so it stays its own link. */
+.project-card .icon-link {
+  position: relative;
+  z-index: 2;
+  margin-right: -0.5rem;
+}
+
 .project-card-description {
+  position: relative;
   margin: 0.5rem 0 0;
   color: var(--text-muted);
   font-size: 0.95rem;

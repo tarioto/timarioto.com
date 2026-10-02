@@ -23,6 +23,22 @@ const projects: Project[] = [
     title: 'VIZRISK',
     description: 'Risk visualization tool.',
     url: 'https://vizrisk.timarioto.com',
+    repo: 'https://github.com/tarioto/vizrisk',
+    screenshot: '/projects/vizrisk.jpg',
+  },
+  {
+    title: 'timarioto.com',
+    description: 'This site: React and Bun on S3 and CloudFront, with live data from Lambda pollers.',
+    url: 'https://timarioto.com',
+    repo: 'https://github.com/tarioto/timarioto.com',
+    screenshot: '/projects/timarioto.jpg',
+  },
+  {
+    title: 'Winchester Storage',
+    description: 'Website for an RV and boat storage facility in Reno, NV.',
+    url: 'https://winchesterrvandboatstorage.com',
+    repo: 'https://github.com/tarioto/winchester-storage',
+    screenshot: '/projects/winchester-storage.jpg',
   },
 ]
 
