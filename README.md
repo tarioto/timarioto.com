@@ -1,6 +1,8 @@
 # timarioto.com
 
-![CI](https://github.com/tarioto/timarioto.com/workflows/CI/badge.svg)
+[![CI](https://github.com/tarioto/timarioto.com/actions/workflows/main.yml/badge.svg)](https://github.com/tarioto/timarioto.com/actions/workflows/main.yml)
+[![Infra](https://github.com/tarioto/timarioto.com/actions/workflows/infra.yml/badge.svg)](https://github.com/tarioto/timarioto.com/actions/workflows/infra.yml)
+[![Secret Scan](https://github.com/tarioto/timarioto.com/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/tarioto/timarioto.com/actions/workflows/secret-scan.yml)
 
 Source for [timarioto.com](https://timarioto.com), a personal site built with
 React, TypeScript, and Bun.
