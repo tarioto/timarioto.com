@@ -1,14 +1,16 @@
 import { type Mock, spyOn } from 'bun:test'
 import { act } from '@testing-library/react'
 
-// Answers fetch calls whose URL contains a route key with that route's JSON
-// body; any other URL rejects, as a network error would.
+// Answers fetch calls whose URL contains a route key with that route's
+// Response, or its value as a JSON body; any other URL rejects, as a network
+// error would.
 export function stubFetch(routes: Record<string, unknown>) {
   return spyOn(globalThis, 'fetch').mockImplementation((async (input: string | URL | Request) => {
     const url = String(input instanceof Request ? input.url : input)
     const route = Object.keys(routes).find((key) => url.includes(key))
     if (route === undefined) throw new TypeError(`Unexpected fetch: ${url}`)
-    return new Response(JSON.stringify(routes[route]))
+    const body = routes[route]
+    return body instanceof Response ? body : new Response(JSON.stringify(body))
   }) as typeof fetch)
 }
 
