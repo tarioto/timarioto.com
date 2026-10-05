@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { renderMarkup } from '../test/renderMarkup'
 import ProjectCard from './ProjectCard'
 
 const vizrisk = {
@@ -10,37 +10,7 @@ const vizrisk = {
   screenshot: '/projects/vizrisk.jpg',
 }
 
-interface RenderedElement {
-  attrs: Record<string, string>
-  ancestors: string[]
-}
-
-// Collects every element matching `selector` from the card's static markup,
-// along with the tag names of its open ancestors.
-function render(selector: string) {
-  const html = renderToStaticMarkup(<ProjectCard {...vizrisk} />)
-  const open: string[] = []
-  const found: RenderedElement[] = []
-  new HTMLRewriter()
-    .on('*', {
-      element(el) {
-        if (!el.selfClosing && el.canHaveContent) {
-          open.push(el.tagName)
-          el.onEndTag(() => {
-            open.pop()
-          })
-        }
-      },
-    })
-    .on(selector, {
-      element(el) {
-        const isOpen = !el.selfClosing && el.canHaveContent
-        found.push({ attrs: Object.fromEntries(el.attributes), ancestors: isOpen ? open.slice(0, -1) : [...open] })
-      },
-    })
-    .transform(html)
-  return found
-}
+const render = (selector: string) => renderMarkup(<ProjectCard {...vizrisk} />, selector)
 
 describe('ProjectCard', () => {
   test('shows a screenshot of the production site', () => {

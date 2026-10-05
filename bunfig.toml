@@ -1,2 +1,7 @@
 [run]
 bun = true
+
+[test]
+coverage = true
+coverageSkipTestFiles = true
+coveragePathIgnorePatterns = ["src/test/**"]

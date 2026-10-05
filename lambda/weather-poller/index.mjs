@@ -6,7 +6,7 @@ const FORECAST_DAYS = 5
 
 const s3 = new S3Client({})
 
-function dailyForecast(list, skipDate) {
+export function dailyForecast(list, skipDate) {
   const byDate = new Map()
 
   for (const entry of list) {
