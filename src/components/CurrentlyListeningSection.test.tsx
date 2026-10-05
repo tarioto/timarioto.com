@@ -64,6 +64,17 @@ describe('CurrentlyListeningSection', () => {
     expect(screen.queryByText('Album of the month')).toBeNull()
   })
 
+  test('holds a placeholder until the data loads', async () => {
+    const fetchSpy = stubFetch({ '/song.json': song, '/album.json': album })
+    const { container } = render(<CurrentlyListeningSection />)
+    expect(screen.getByRole('region', { name: 'Currently Listening' }).getAttribute('aria-busy')).toBe('true')
+    expect(container.querySelectorAll('.media-card-image.skeleton')).toHaveLength(2)
+    expect(screen.queryAllByRole('link')).toEqual([])
+
+    await fetchesSettled(fetchSpy)
+    expect(container.querySelector('[aria-busy]')).toBeNull()
+  })
+
   test('renders nothing without data', async () => {
     const fetchSpy = stubFetch({})
     const { container } = render(<CurrentlyListeningSection />)

@@ -1,5 +1,5 @@
 import { useJson } from '../hooks/useJson'
-import MediaCard from './MediaCard'
+import MediaCard, { MediaCardSkeleton } from './MediaCard'
 import PageSection from './PageSection'
 
 interface WatchedMovie {
@@ -27,9 +27,20 @@ interface TraktActivity {
 }
 
 export default function CurrentlyWatchingSection() {
-  const activity = useJson<TraktActivity>('/trakt.json')
+  const { data: activity, loading } = useJson<TraktActivity>('/trakt.json')
   const movie = activity?.movie
   const show = activity?.show
+
+  if (loading) {
+    return (
+      <PageSection className="currently-watching-section" title="Currently Watching" aria-busy="true">
+        <div className="media-card-list">
+          <MediaCardSkeleton aspect="poster" />
+          <MediaCardSkeleton aspect="poster" description />
+        </div>
+      </PageSection>
+    )
+  }
 
   if (!movie && !show) return null
 

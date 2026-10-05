@@ -32,10 +32,14 @@ describe('WeatherSection', () => {
     expect(screen.getByText('clear sky near you')).toBeDefined()
   })
 
-  test('renders nothing while locating the visitor', () => {
+  test('holds a placeholder while locating the visitor', () => {
     restore = stubGeolocation('pending')
     const { container } = render(<WeatherSection />)
-    expect(container.innerHTML).toBe('')
+    expect(screen.getByRole('region', { name: 'Weather' }).getAttribute('aria-busy')).toBe('true')
+    const cards = container.querySelectorAll('.weather-section-forecast-card')
+    expect(cards).toHaveLength(5)
+    expect(cards[0]?.querySelector('.glass-backing')).not.toBeNull()
+    expect(cards[0]?.querySelectorAll('.skeleton-text')).toHaveLength(3)
   })
 
   test('renders nothing when the weather request fails', async () => {

@@ -7,23 +7,23 @@ describe('useJson', () => {
   test('returns the parsed body once it loads', async () => {
     const fetchSpy = stubFetch({ '/data.json': { hello: 'world' } })
     const { result } = renderHook(() => useJson<{ hello: string }>('/data.json'))
-    expect(result.current).toBeNull()
+    expect(result.current).toEqual({ data: null, loading: true })
     await fetchesSettled(fetchSpy)
-    expect(result.current).toEqual({ hello: 'world' })
+    expect(result.current).toEqual({ data: { hello: 'world' }, loading: false })
   })
 
-  test('stays null when the request fails', async () => {
+  test('stops loading with no data when the request fails', async () => {
     const fetchSpy = stubFetch({})
     const { result } = renderHook(() => useJson('/data.json'))
     await fetchesSettled(fetchSpy)
-    expect(result.current).toBeNull()
+    expect(result.current).toEqual({ data: null, loading: false })
   })
 
-  test('stays null when the body is not JSON', async () => {
+  test('stops loading with no data when the body is not JSON', async () => {
     const fetchSpy = stubFetch({ '/data.json': new Response('<!doctype html>') })
     const { result } = renderHook(() => useJson('/data.json'))
     await fetchesSettled(fetchSpy)
-    expect(result.current).toBeNull()
+    expect(result.current).toEqual({ data: null, loading: false })
   })
 
   test('ignores a response that arrives after unmount', async () => {
@@ -31,6 +31,6 @@ describe('useJson', () => {
     const { result, unmount } = renderHook(() => useJson('/data.json'))
     unmount()
     await fetchesSettled(fetchSpy)
-    expect(result.current).toBeNull()
+    expect(result.current).toEqual({ data: null, loading: true })
   })
 })

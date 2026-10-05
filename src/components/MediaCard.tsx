@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { ArrowUpRightIcon } from '../icons'
+import GlassBacking from './GlassBacking'
 import GlassCard from './GlassCard'
 import './MediaCard.css'
+import Skeleton from './Skeleton'
 
 interface MediaCardProps {
   href: string
@@ -51,5 +53,33 @@ export default function MediaCard({ href, imageSrc, aspect, fallback, kicker, ti
       </span>
       {description && <p className="media-card-description">{description}</p>}
     </GlassCard>
+  )
+}
+
+// A MediaCard's placeholder while its data loads, built from the same classes
+// so it takes up the same space.
+export function MediaCardSkeleton({ aspect, description }: Pick<MediaCardProps, 'aspect'> & { description?: boolean }) {
+  return (
+    <div className="glass-card" aria-hidden="true">
+      <div className="glass-card-media">
+        <div className={`media-card-image media-card-image-${aspect} skeleton`} />
+      </div>
+      <div className="glass-card-panel">
+        <GlassBacking radius={0} />
+        <div className="glass-card-body">
+          <span className="media-card-kicker">
+            <Skeleton width="55%" />
+          </span>
+          <span className="media-card-title">
+            <Skeleton width="75%" />
+          </span>
+          {description && (
+            <p className="media-card-description">
+              <Skeleton width="60%" />
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }

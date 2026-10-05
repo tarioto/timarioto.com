@@ -1,5 +1,5 @@
 import { useJson } from '../hooks/useJson'
-import MediaCard from './MediaCard'
+import MediaCard, { MediaCardSkeleton } from './MediaCard'
 import PageSection from './PageSection'
 
 interface MonthlyPick {
@@ -35,13 +35,26 @@ export default function CurrentlyListeningSection() {
   const song = useJson<MonthlyPick>('/song.json')
   const album = useJson<MonthlyPick>('/album.json')
 
-  if (!song && !album) return null
+  // Hold the placeholder until both have settled, so a late album doesn't
+  // shift the song card once it's showing.
+  if (song.loading || album.loading) {
+    return (
+      <PageSection className="currently-listening-section" title="Currently Listening" aria-busy="true">
+        <div className="media-card-list">
+          <MediaCardSkeleton aspect="square" description />
+          <MediaCardSkeleton aspect="square" description />
+        </div>
+      </PageSection>
+    )
+  }
+
+  if (!song.data && !album.data) return null
 
   return (
     <PageSection className="currently-listening-section" title="Currently Listening">
       <div className="media-card-list">
-        {song && <PickCard pick={song} kicker="Song of the month" />}
-        {album && <PickCard pick={album} kicker="Album of the month" />}
+        {song.data && <PickCard pick={song.data} kicker="Song of the month" />}
+        {album.data && <PickCard pick={album.data} kicker="Album of the month" />}
       </div>
     </PageSection>
   )

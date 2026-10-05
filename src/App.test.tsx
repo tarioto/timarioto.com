@@ -8,8 +8,9 @@ describe('App', () => {
     expect(sections).toEqual(['Intro', 'Projects'])
   })
 
-  test('leaves the side column empty until live data loads', () => {
-    expect(renderMarkup(<App />, '.bento-side > *')).toEqual([])
+  test('holds a placeholder for each live-data tile until its data loads', () => {
+    const tiles = renderMarkup(<App />, '.bento-side > [aria-busy="true"]').map((el) => el.attrs['aria-label'])
+    expect(tiles).toEqual(['Weather', 'Currently Listening', 'Currently Watching'])
   })
 
   test('links the contact details from the intro', () => {

@@ -101,6 +101,7 @@ describe('useVisitorWeather', () => {
     expect(result.current.current?.tempC).toBe(20.4)
     expect(result.current.forecast).toHaveLength(5)
     expect(result.current.status).toBe('located')
+    expect(result.current.loading).toBe(false)
     expect(String(fetchSpy.mock.calls[0]?.[0])).toContain('latitude=51.5&longitude=-0.12')
   })
 
@@ -109,7 +110,13 @@ describe('useVisitorWeather', () => {
     const fetchSpy = stubFetch({})
     const { result } = renderHook(() => useVisitorWeather())
     expect(fetchSpy).not.toHaveBeenCalled()
-    expect(result.current).toMatchObject({ status: 'loading', current: null, forecast: [], locationName: null })
+    expect(result.current).toMatchObject({
+      status: 'loading',
+      loading: true,
+      current: null,
+      forecast: [],
+      locationName: null,
+    })
   })
 
   test('stays empty when the requests fail', async () => {
@@ -118,6 +125,12 @@ describe('useVisitorWeather', () => {
     const { result } = renderHook(() => useVisitorWeather())
     await fetchesSettled(fetchSpy)
     expect(fetchSpy).toHaveBeenCalledTimes(2)
-    expect(result.current).toMatchObject({ status: 'fallback', current: null, forecast: [], locationName: null })
+    expect(result.current).toMatchObject({
+      status: 'fallback',
+      loading: false,
+      current: null,
+      forecast: [],
+      locationName: null,
+    })
   })
 })

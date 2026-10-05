@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { fireEvent, render, screen } from '@testing-library/react'
-import MediaCard from './MediaCard'
+import MediaCard, { MediaCardSkeleton } from './MediaCard'
 
 const props = {
   href: 'https://example.com/item',
@@ -42,5 +42,21 @@ describe('MediaCard', () => {
     const { container } = render(<MediaCard {...props} />)
     fireEvent.error(container.querySelector('img.media-card-image')!)
     expect(container.querySelector('.media-card-image-fallback')).not.toBeNull()
+  })
+})
+
+describe('MediaCardSkeleton', () => {
+  test('mirrors the card with a thumbnail and text lines, hidden from assistive tech', () => {
+    const { container } = render(<MediaCardSkeleton aspect="poster" />)
+    const card = container.querySelector('.glass-card')!
+    expect(card.getAttribute('aria-hidden')).toBe('true')
+    expect(card.querySelector('.media-card-image-poster.skeleton')).not.toBeNull()
+    expect(card.querySelectorAll('.skeleton-text')).toHaveLength(2)
+    expect(card.querySelector('.glass-card-panel > .glass-backing')).not.toBeNull()
+  })
+
+  test('adds a description line when asked', () => {
+    const { container } = render(<MediaCardSkeleton aspect="square" description />)
+    expect(container.querySelector('.media-card-description .skeleton-text')).not.toBeNull()
   })
 })
