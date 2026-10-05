@@ -2,6 +2,7 @@
 bun = true
 
 [test]
+preload = ["./src/test/setup.ts"]
 coverage = true
 coverageSkipTestFiles = true
 coveragePathIgnorePatterns = ["src/test/**"]
