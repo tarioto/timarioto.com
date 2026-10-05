@@ -33,6 +33,65 @@ interface FetchedWeather {
   forecast: ForecastDay[]
 }
 
+// The subset of Open-Meteo's /v1/forecast response this hook requests.
+interface OpenMeteoResponse {
+  current?: {
+    temperature_2m: number
+    apparent_temperature: number
+    weather_code: number
+    relative_humidity_2m: number
+    wind_speed_10m: number
+    is_day: number
+  }
+  daily?: {
+    time: string[]
+    weather_code: number[]
+    temperature_2m_max: number[]
+    temperature_2m_min: number[]
+  }
+}
+
+interface ReverseGeocodeResponse {
+  city?: string
+  locality?: string
+  countryCode?: string
+}
+
+/** Maps an Open-Meteo forecast response onto current conditions and the next 5 days. */
+export function parseWeather(data: OpenMeteoResponse | null): FetchedWeather {
+  const current: CurrentConditions | null = data?.current
+    ? {
+        tempC: data.current.temperature_2m,
+        feelsLikeC: data.current.apparent_temperature,
+        humidity: data.current.relative_humidity_2m,
+        windKph: data.current.wind_speed_10m,
+        ...describeWeatherCode(data.current.weather_code, data.current.is_day === 1),
+      }
+    : null
+
+  const daily = data?.daily
+  const dates: string[] = daily?.time ?? []
+  // Skip today (index 0) so the strip shows the next 5 days, like a forecast.
+  const forecast: ForecastDay[] = dates.slice(1, 6).map((date, i) => {
+    const idx = i + 1
+    return {
+      date,
+      tempMinC: daily!.temperature_2m_min[idx],
+      tempMaxC: daily!.temperature_2m_max[idx],
+      ...describeWeatherCode(daily!.weather_code[idx], true),
+    }
+  })
+
+  return { current, forecast }
+}
+
+/** Formats a BigDataCloud reverse-geocode response as "City, CC". */
+export function parseLocationName(data: ReverseGeocodeResponse | null): string | null {
+  const name = data?.city || data?.locality
+  if (!name) return null
+  return data?.countryCode ? `${name}, ${data.countryCode}` : name
+}
+
 async function fetchWeather(lat: number, lon: number, signal: AbortSignal): Promise<FetchedWeather> {
   try {
     const params = new URLSearchParams({
@@ -44,31 +103,7 @@ async function fetchWeather(lat: number, lon: number, signal: AbortSignal): Prom
       forecast_days: '6',
     })
     const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { signal })
-    const data = await response.json()
-
-    const current: CurrentConditions | null = data?.current
-      ? {
-          tempC: data.current.temperature_2m,
-          feelsLikeC: data.current.apparent_temperature,
-          humidity: data.current.relative_humidity_2m,
-          windKph: data.current.wind_speed_10m,
-          ...describeWeatherCode(data.current.weather_code, data.current.is_day === 1),
-        }
-      : null
-
-    const dates: string[] = data?.daily?.time ?? []
-    // Skip today (index 0) so the strip shows the next 5 days, like a forecast.
-    const forecast: ForecastDay[] = dates.slice(1, 6).map((date, i) => {
-      const idx = i + 1
-      return {
-        date,
-        tempMinC: data.daily.temperature_2m_min[idx],
-        tempMaxC: data.daily.temperature_2m_max[idx],
-        ...describeWeatherCode(data.daily.weather_code[idx], true),
-      }
-    })
-
-    return { current, forecast }
+    return parseWeather(await response.json())
   } catch {
     return { current: null, forecast: [] }
   }
@@ -78,10 +113,7 @@ async function fetchLocationName(lat: number, lon: number, signal: AbortSignal):
   try {
     const params = new URLSearchParams({ latitude: String(lat), longitude: String(lon), localityLanguage: 'en' })
     const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${params}`, { signal })
-    const data = await response.json()
-    const name: string | undefined = data?.city || data?.locality
-    if (!name) return null
-    return data?.countryCode ? `${name}, ${data.countryCode}` : name
+    return parseLocationName(await response.json())
   } catch {
     return null
   }

@@ -24,7 +24,7 @@ interface AlbumOfTheMonth {
   playCount: number | null
 }
 
-function playsDescription(artist: string | null, playCount: number | null) {
+export function playsDescription(artist: string | null, playCount: number | null) {
   const plays = playCount ? `${playCount} play${playCount === 1 ? '' : 's'}` : null
   return [artist, plays].filter(Boolean).join(' · ') || null
 }

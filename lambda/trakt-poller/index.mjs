@@ -6,11 +6,11 @@ const TMDB_IMAGE = 'https://image.tmdb.org/t/p/w342'
 
 const s3 = new S3Client({})
 
-function movieUrl(slug) {
+export function movieUrl(slug) {
   return `https://trakt.tv/movies/${slug}`
 }
 
-function episodeUrl(showSlug, season, episode) {
+export function episodeUrl(showSlug, season, episode) {
   return `https://trakt.tv/shows/${showSlug}/seasons/${season}/episodes/${episode}`
 }
 
