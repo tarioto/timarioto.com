@@ -13,8 +13,7 @@ export default function WeatherSection() {
   if (status === 'loading' || !current) return null
 
   return (
-    <PageSection className="weather-section" aria-label="Weather">
-      <h2 className="weather-section-title">Weather</h2>
+    <PageSection className="weather-section" title="Weather">
       <div className="weather-section-current">
         <span className="weather-section-current-icon" role="img" aria-hidden="true">
           {current.icon}

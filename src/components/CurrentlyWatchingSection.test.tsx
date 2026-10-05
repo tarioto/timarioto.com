@@ -55,9 +55,9 @@ describe('CurrentlyWatchingSection', () => {
     const fetchSpy = stubFetch({ '/trakt.json': activity })
     const { container } = render(<CurrentlyWatchingSection />)
     await fetchesSettled(fetchSpy)
-    expect(container.querySelectorAll('.currently-watching-poster-fallback')).toHaveLength(1)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(1)
 
-    fireEvent.error(container.querySelector('img.currently-watching-poster')!)
-    expect(container.querySelectorAll('.currently-watching-poster-fallback')).toHaveLength(2)
+    fireEvent.error(container.querySelector('img.media-card-image')!)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(2)
   })
 })

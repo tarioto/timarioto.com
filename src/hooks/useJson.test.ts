@@ -1,0 +1,36 @@
+import { describe, expect, test } from 'bun:test'
+import { renderHook } from '@testing-library/react'
+import { fetchesSettled, stubFetch } from '../test/stubs'
+import { useJson } from './useJson'
+
+describe('useJson', () => {
+  test('returns the parsed body once it loads', async () => {
+    const fetchSpy = stubFetch({ '/data.json': { hello: 'world' } })
+    const { result } = renderHook(() => useJson<{ hello: string }>('/data.json'))
+    expect(result.current).toBeNull()
+    await fetchesSettled(fetchSpy)
+    expect(result.current).toEqual({ hello: 'world' })
+  })
+
+  test('stays null when the request fails', async () => {
+    const fetchSpy = stubFetch({})
+    const { result } = renderHook(() => useJson('/data.json'))
+    await fetchesSettled(fetchSpy)
+    expect(result.current).toBeNull()
+  })
+
+  test('stays null when the body is not JSON', async () => {
+    const fetchSpy = stubFetch({ '/data.json': new Response('<!doctype html>') })
+    const { result } = renderHook(() => useJson('/data.json'))
+    await fetchesSettled(fetchSpy)
+    expect(result.current).toBeNull()
+  })
+
+  test('ignores a response that arrives after unmount', async () => {
+    const fetchSpy = stubFetch({ '/data.json': { hello: 'world' } })
+    const { result, unmount } = renderHook(() => useJson('/data.json'))
+    unmount()
+    await fetchesSettled(fetchSpy)
+    expect(result.current).toBeNull()
+  })
+})

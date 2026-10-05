@@ -1,16 +1,14 @@
-import ContactLinks, { type ContactInfo } from './ContactLinks'
 import './Footer.css'
 import PageSection from './PageSection'
 
-interface FooterProps extends ContactInfo {
+interface FooterProps {
   name: string
   year: number
 }
 
-export default function Footer({ name, year, ...contact }: FooterProps) {
+export default function Footer({ name, year }: FooterProps) {
   return (
     <PageSection as="footer" className="footer" glass={false}>
-      <ContactLinks {...contact} />
       <p className="footer-copyright">
         © {year} {name}
       </p>

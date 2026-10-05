@@ -76,9 +76,9 @@ describe('CurrentlyListeningSection', () => {
     const { container } = render(<CurrentlyListeningSection />)
     await fetchesSettled(fetchSpy)
     // The album has no artwork, so only the song's image is rendered.
-    expect(container.querySelectorAll('.currently-listening-artwork-fallback')).toHaveLength(1)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(1)
 
-    fireEvent.error(container.querySelector('img.currently-listening-artwork')!)
-    expect(container.querySelectorAll('.currently-listening-artwork-fallback')).toHaveLength(2)
+    fireEvent.error(container.querySelector('img.media-card-image')!)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(2)
   })
 })
