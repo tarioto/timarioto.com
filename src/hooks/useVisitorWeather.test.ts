@@ -1,5 +1,7 @@
-import { describe, expect, test } from 'bun:test'
-import { parseLocationName, parseWeather } from './useVisitorWeather'
+import { afterEach, describe, expect, test } from 'bun:test'
+import { renderHook } from '@testing-library/react'
+import { fetchesSettled, openMeteoResponse, stubFetch, stubGeolocation } from '../test/stubs'
+import { parseLocationName, parseWeather, useVisitorWeather } from './useVisitorWeather'
 
 const response = {
   current: {
@@ -79,5 +81,43 @@ describe('parseLocationName', () => {
   test('returns null without a place name', () => {
     expect(parseLocationName({ countryCode: 'US' })).toBeNull()
     expect(parseLocationName(null)).toBeNull()
+  })
+})
+
+describe('useVisitorWeather', () => {
+  let restore = () => {}
+  afterEach(() => restore())
+
+  test('fetches weather and a place name for the located visitor', async () => {
+    restore = stubGeolocation({ lat: 51.5, lon: -0.12 })
+    const fetchSpy = stubFetch({
+      'api.open-meteo.com': openMeteoResponse,
+      'api.bigdatacloud.net': { city: 'London', countryCode: 'GB' },
+    })
+    const { result } = renderHook(() => useVisitorWeather())
+    await fetchesSettled(fetchSpy)
+
+    expect(result.current.locationName).toBe('London, GB')
+    expect(result.current.current?.tempC).toBe(20.4)
+    expect(result.current.forecast).toHaveLength(5)
+    expect(result.current.status).toBe('located')
+    expect(String(fetchSpy.mock.calls[0]?.[0])).toContain('latitude=51.5&longitude=-0.12')
+  })
+
+  test('waits for a location before fetching', () => {
+    restore = stubGeolocation('pending')
+    const fetchSpy = stubFetch({})
+    const { result } = renderHook(() => useVisitorWeather())
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(result.current).toMatchObject({ status: 'loading', current: null, forecast: [], locationName: null })
+  })
+
+  test('stays empty when the requests fail', async () => {
+    restore = stubGeolocation('denied')
+    const fetchSpy = stubFetch({})
+    const { result } = renderHook(() => useVisitorWeather())
+    await fetchesSettled(fetchSpy)
+    expect(fetchSpy).toHaveBeenCalledTimes(2)
+    expect(result.current).toMatchObject({ status: 'fallback', current: null, forecast: [], locationName: null })
   })
 })
