@@ -1,0 +1,62 @@
+/* Fills the card's height, cropped to a width that suits its aspect. */
+.media-card-image {
+  display: block;
+  width: 3.5rem;
+  height: 100%;
+  min-height: 3.5rem;
+  object-fit: cover;
+  background: var(--border);
+}
+
+.media-card-image-poster {
+  width: 3rem;
+}
+
+.media-card-image-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  user-select: none;
+}
+
+.media-card-kicker {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.media-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.glass-card:hover .media-card-title {
+  color: var(--accent);
+}
+
+.media-card-arrow {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.media-card-description {
+  margin: 0.1rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* The cards a section wraps its MediaCards in: side by side where there's
+   room, stacked where there isn't. */
+.media-card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.75rem;
+}

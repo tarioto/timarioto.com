@@ -64,6 +64,17 @@ describe('CurrentlyListeningSection', () => {
     expect(screen.queryByText('Album of the month')).toBeNull()
   })
 
+  test('holds a placeholder until the data loads', async () => {
+    const fetchSpy = stubFetch({ '/song.json': song, '/album.json': album })
+    const { container } = render(<CurrentlyListeningSection />)
+    expect(screen.getByRole('region', { name: 'Currently Listening' }).getAttribute('aria-busy')).toBe('true')
+    expect(container.querySelectorAll('.media-card-image.skeleton')).toHaveLength(2)
+    expect(screen.queryAllByRole('link')).toEqual([])
+
+    await fetchesSettled(fetchSpy)
+    expect(container.querySelector('[aria-busy]')).toBeNull()
+  })
+
   test('renders nothing without data', async () => {
     const fetchSpy = stubFetch({})
     const { container } = render(<CurrentlyListeningSection />)
@@ -76,9 +87,9 @@ describe('CurrentlyListeningSection', () => {
     const { container } = render(<CurrentlyListeningSection />)
     await fetchesSettled(fetchSpy)
     // The album has no artwork, so only the song's image is rendered.
-    expect(container.querySelectorAll('.currently-listening-artwork-fallback')).toHaveLength(1)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(1)
 
-    fireEvent.error(container.querySelector('img.currently-listening-artwork')!)
-    expect(container.querySelectorAll('.currently-listening-artwork-fallback')).toHaveLength(2)
+    fireEvent.error(container.querySelector('img.media-card-image')!)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(2)
   })
 })

@@ -44,6 +44,17 @@ describe('CurrentlyWatchingSection', () => {
     expect(screen.queryByText('Last movie')).toBeNull()
   })
 
+  test('holds a placeholder until the data loads', async () => {
+    const fetchSpy = stubFetch({ '/trakt.json': activity })
+    const { container } = render(<CurrentlyWatchingSection />)
+    expect(screen.getByRole('region', { name: 'Currently Watching' }).getAttribute('aria-busy')).toBe('true')
+    expect(container.querySelectorAll('.media-card-image.skeleton')).toHaveLength(2)
+    expect(screen.queryAllByRole('link')).toEqual([])
+
+    await fetchesSettled(fetchSpy)
+    expect(container.querySelector('[aria-busy]')).toBeNull()
+  })
+
   test('renders nothing when the poller has not run', async () => {
     const fetchSpy = stubFetch({})
     const { container } = render(<CurrentlyWatchingSection />)
@@ -55,9 +66,9 @@ describe('CurrentlyWatchingSection', () => {
     const fetchSpy = stubFetch({ '/trakt.json': activity })
     const { container } = render(<CurrentlyWatchingSection />)
     await fetchesSettled(fetchSpy)
-    expect(container.querySelectorAll('.currently-watching-poster-fallback')).toHaveLength(1)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(1)
 
-    fireEvent.error(container.querySelector('img.currently-watching-poster')!)
-    expect(container.querySelectorAll('.currently-watching-poster-fallback')).toHaveLength(2)
+    fireEvent.error(container.querySelector('img.media-card-image')!)
+    expect(container.querySelectorAll('.media-card-image-fallback')).toHaveLength(2)
   })
 })

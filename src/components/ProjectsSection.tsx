@@ -8,8 +8,7 @@ interface ProjectsSectionProps {
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
-    <PageSection className="projects-section" aria-label="Projects">
-      <h2 className="projects-section-title">Projects</h2>
+    <PageSection className="projects-section" title="Projects">
       <div className="projects-section-grid">
         {projects.map((project) => (
           <ProjectCard key={project.url} {...project} />

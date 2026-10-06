@@ -1,5 +1,5 @@
+import Bento from './components/Bento'
 import type { ContactInfo } from './components/ContactLinks'
-import ContactSection from './components/ContactSection'
 import CurrentlyListeningSection from './components/CurrentlyListeningSection'
 import CurrentlyWatchingSection from './components/CurrentlyWatchingSection'
 import Footer from './components/Footer'
@@ -46,15 +46,22 @@ export default function App() {
   return (
     <>
       <Starfield />
-      <Hero name={NAME} tagline="Software engineer building products end-to-end." />
-      <main>
-        <ProjectsSection projects={projects} />
-        <WeatherSection />
-        <CurrentlyListeningSection />
-        <CurrentlyWatchingSection />
-        <ContactSection {...contact} />
-      </main>
-      <Footer name={NAME} year={new Date().getFullYear()} {...contact} />
+      <Bento
+        main={
+          <>
+            <Hero name={NAME} tagline="Software engineer building products end-to-end." {...contact} />
+            <ProjectsSection projects={projects} />
+          </>
+        }
+        side={
+          <>
+            <WeatherSection />
+            <CurrentlyListeningSection />
+            <CurrentlyWatchingSection />
+          </>
+        }
+        footer={<Footer name={NAME} year={new Date().getFullYear()} />}
+      />
     </>
   )
 }

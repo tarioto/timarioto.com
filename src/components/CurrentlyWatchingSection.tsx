@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
-import { ArrowUpRightIcon } from '../icons'
-import './CurrentlyWatchingSection.css'
-import GlassCard from './GlassCard'
+import { useJson } from '../hooks/useJson'
+import MediaCard, { MediaCardSkeleton } from './MediaCard'
 import PageSection from './PageSection'
 
 interface WatchedMovie {
@@ -28,84 +26,47 @@ interface TraktActivity {
   show: WatchedEpisode | null
 }
 
-// Poster with a clapperboard placeholder for when Trakt has no poster for the
-// title or the image fails to load.
-function Poster({ src }: { src: string | null }) {
-  const [failed, setFailed] = useState(false)
+export default function CurrentlyWatchingSection() {
+  const { data: activity, loading } = useJson<TraktActivity>('/trakt.json')
+  const movie = activity?.movie
+  const show = activity?.show
 
-  if (!src || failed) {
+  if (loading) {
     return (
-      <div className="currently-watching-poster currently-watching-poster-fallback" aria-hidden="true">
-        🎬
-      </div>
+      <PageSection className="currently-watching-section" title="Currently Watching" aria-busy="true">
+        <div className="media-card-list">
+          <MediaCardSkeleton aspect="poster" />
+          <MediaCardSkeleton aspect="poster" description />
+        </div>
+      </PageSection>
     )
   }
 
-  return (
-    <img
-      className="currently-watching-poster"
-      src={src}
-      alt=""
-      width={342}
-      height={513}
-      onError={() => setFailed(true)}
-    />
-  )
-}
-
-export default function CurrentlyWatchingSection() {
-  const [activity, setActivity] = useState<TraktActivity | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-
-    fetch('/trakt.json')
-      .then((res) => res.json())
-      .then((data: TraktActivity) => {
-        if (!cancelled) setActivity(data)
-      })
-      .catch(() => {
-        // No data yet (e.g. the poller hasn't run, or CloudFront served the
-        // SPA fallback instead of a real trakt.json) — render nothing.
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  if (!activity?.movie && !activity?.show) return null
+  if (!movie && !show) return null
 
   return (
-    <PageSection className="currently-watching-section" aria-label="Currently Watching">
-      <h2 className="currently-watching-title">Currently Watching</h2>
-      <div className="currently-watching-grid">
-        {activity?.movie && (
-          <GlassCard
-            href={activity.movie.url}
-            media={<Poster src={activity.movie.posterUrl} />}
-            backdropSrc={activity.movie.posterUrl}
-          >
-            <span className="currently-watching-kicker">Last movie</span>
-            <span className="currently-watching-card-title">
-              {activity.movie.title} ({activity.movie.year})
-              <ArrowUpRightIcon className="currently-watching-arrow" />
-            </span>
-          </GlassCard>
+    <PageSection className="currently-watching-section" title="Currently Watching">
+      <div className="media-card-list">
+        {movie && (
+          <MediaCard
+            href={movie.url}
+            imageSrc={movie.posterUrl}
+            aspect="poster"
+            fallback="🎬"
+            kicker="Last movie"
+            title={`${movie.title} (${movie.year})`}
+          />
         )}
-        {activity?.show && (
-          <GlassCard
-            href={activity.show.url}
-            media={<Poster src={activity.show.posterUrl} />}
-            backdropSrc={activity.show.posterUrl}
-          >
-            <span className="currently-watching-kicker">Last episode</span>
-            <span className="currently-watching-card-title">
-              {activity.show.title} S{activity.show.season}E{activity.show.episode}
-              <ArrowUpRightIcon className="currently-watching-arrow" />
-            </span>
-            <p className="currently-watching-description">{activity.show.episodeTitle}</p>
-          </GlassCard>
+        {show && (
+          <MediaCard
+            href={show.url}
+            imageSrc={show.posterUrl}
+            aspect="poster"
+            fallback="🎬"
+            kicker="Last episode"
+            title={`${show.title} S${show.season}E${show.episode}`}
+            description={show.episodeTitle}
+          />
         )}
       </div>
     </PageSection>

@@ -11,7 +11,7 @@ interface CurrentConditions {
   windKph: number
 }
 
-interface ForecastDay {
+export interface ForecastDay {
   date: string
   tempMinC: number
   tempMaxC: number
@@ -23,6 +23,9 @@ export interface VisitorWeather {
   lat: number
   lon: number
   status: VisitorLocationStatus
+  // True until the forecast request has settled, including while locating,
+  // but not while the location prompt sits unanswered.
+  loading: boolean
   locationName: string | null
   current: CurrentConditions | null
   forecast: ForecastDay[]
@@ -122,19 +125,20 @@ async function fetchLocationName(lat: number, lon: number, signal: AbortSignal):
 /** Live weather for the visitor's own location (Open-Meteo), shared by the starfield and the Weather section. */
 export function useVisitorWeather(): VisitorWeather {
   const location = useVisitorLocation()
-  const [data, setData] = useState<FetchedWeather & { locationName: string | null }>({
+  const [data, setData] = useState<FetchedWeather & { locationName: string | null; fetched: boolean }>({
     current: null,
     forecast: [],
     locationName: null,
+    fetched: false,
   })
 
   useEffect(() => {
-    if (location.status === 'loading') return
+    if (location.status === 'loading' || location.status === 'unanswered') return
     let cancelled = false
     const controller = new AbortController()
 
     fetchWeather(location.lat, location.lon, controller.signal).then((weather) => {
-      if (!cancelled) setData((prev) => ({ ...prev, ...weather }))
+      if (!cancelled) setData((prev) => ({ ...prev, ...weather, fetched: true }))
     })
     fetchLocationName(location.lat, location.lon, controller.signal).then((locationName) => {
       if (!cancelled) setData((prev) => ({ ...prev, locationName }))
@@ -146,5 +150,12 @@ export function useVisitorWeather(): VisitorWeather {
     }
   }, [location.lat, location.lon, location.status])
 
-  return { lat: location.lat, lon: location.lon, status: location.status, ...data }
+  const { fetched, ...weather } = data
+  return {
+    lat: location.lat,
+    lon: location.lon,
+    status: location.status,
+    loading: !fetched && location.status !== 'unanswered',
+    ...weather,
+  }
 }

@@ -1,6 +1,7 @@
-import { afterEach, describe, expect, test } from 'bun:test'
-import { renderHook } from '@testing-library/react'
-import { fetchesSettled, openMeteoResponse, stubFetch, stubGeolocation } from '../test/stubs'
+import { afterEach, describe, expect, jest, test } from 'bun:test'
+import { act, renderHook } from '@testing-library/react'
+import { answerGeolocation, fetchesSettled, openMeteoResponse, stubFetch, stubGeolocation } from '../test/stubs'
+import { PROMPT_TIMEOUT_MS } from './useVisitorLocation'
 import { parseLocationName, parseWeather, useVisitorWeather } from './useVisitorWeather'
 
 const response = {
@@ -86,7 +87,10 @@ describe('parseLocationName', () => {
 
 describe('useVisitorWeather', () => {
   let restore = () => {}
-  afterEach(() => restore())
+  afterEach(() => {
+    restore()
+    jest.useRealTimers()
+  })
 
   test('fetches weather and a place name for the located visitor', async () => {
     restore = stubGeolocation({ lat: 51.5, lon: -0.12 })
@@ -101,6 +105,7 @@ describe('useVisitorWeather', () => {
     expect(result.current.current?.tempC).toBe(20.4)
     expect(result.current.forecast).toHaveLength(5)
     expect(result.current.status).toBe('located')
+    expect(result.current.loading).toBe(false)
     expect(String(fetchSpy.mock.calls[0]?.[0])).toContain('latitude=51.5&longitude=-0.12')
   })
 
@@ -109,7 +114,13 @@ describe('useVisitorWeather', () => {
     const fetchSpy = stubFetch({})
     const { result } = renderHook(() => useVisitorWeather())
     expect(fetchSpy).not.toHaveBeenCalled()
-    expect(result.current).toMatchObject({ status: 'loading', current: null, forecast: [], locationName: null })
+    expect(result.current).toMatchObject({
+      status: 'loading',
+      loading: true,
+      current: null,
+      forecast: [],
+      locationName: null,
+    })
   })
 
   test('stays empty when the requests fail', async () => {
@@ -118,6 +129,28 @@ describe('useVisitorWeather', () => {
     const { result } = renderHook(() => useVisitorWeather())
     await fetchesSettled(fetchSpy)
     expect(fetchSpy).toHaveBeenCalledTimes(2)
-    expect(result.current).toMatchObject({ status: 'fallback', current: null, forecast: [], locationName: null })
+    expect(result.current).toMatchObject({
+      status: 'fallback',
+      loading: false,
+      current: null,
+      forecast: [],
+      locationName: null,
+    })
+  })
+
+  test('stops loading without fetching while the location prompt is unanswered', async () => {
+    jest.useFakeTimers()
+    restore = stubGeolocation('pending')
+    const fetchSpy = stubFetch({ 'api.open-meteo.com': openMeteoResponse, 'api.bigdatacloud.net': {} })
+    const { result } = renderHook(() => useVisitorWeather())
+    act(() => jest.advanceTimersByTime(PROMPT_TIMEOUT_MS))
+    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(result.current).toMatchObject({ status: 'unanswered', loading: false, current: null })
+
+    jest.useRealTimers()
+    answerGeolocation({ lat: 51.5, lon: -0.12 })
+    expect(result.current.loading).toBe(true)
+    await fetchesSettled(fetchSpy)
+    expect(result.current).toMatchObject({ status: 'located', loading: false, current: { tempC: 20.4 } })
   })
 })

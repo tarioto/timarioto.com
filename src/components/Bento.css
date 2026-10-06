@@ -1,0 +1,58 @@
+/* The page fills the viewport, the grid centered in whatever the footer
+   leaves. min-height rather than height, so a short window scrolls rather
+   than clipping a tile. */
+.bento {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.bento-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.bento-main,
+.bento-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+/* Whichever column is shorter stretches to match the other: projects take
+   the main column's spare height, and the live-data tiles share the side
+   column's, so one that renders nothing leaves no hole. */
+.bento-main > :last-child,
+.bento-side > * {
+  flex: 1;
+}
+
+/* Before any live data loads, or if none does, the intro and projects take
+   the whole width. */
+.bento-side:empty {
+  display: none;
+}
+
+.bento-grid:has(> .bento-side:empty) {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 960px;
+}
+
+@media (max-width: 767px) {
+  .bento-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bento-main > :last-child,
+  .bento-side > * {
+    flex: none;
+  }
+}

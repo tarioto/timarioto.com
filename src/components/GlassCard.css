@@ -1,9 +1,7 @@
-/* A column so the panel can stretch to fill a card that the grid row made
-   taller than its content. */
+/* A row: the media as a thumbnail on the left, the panel filling the rest. */
 .glass-card {
   position: relative;
   display: flex;
-  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -23,6 +21,8 @@
 
 .glass-card-media {
   position: relative;
+  display: flex;
+  flex-shrink: 0;
 }
 
 .glass-card-panel {
@@ -30,12 +30,16 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  min-width: 0;
 }
 
 /* A stronger shadow than the page's, since bright artwork can sit right
    behind the clear glass. */
 .glass-card-body {
+  display: flex;
   flex: 1;
-  padding: 0.75rem 1rem;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
   text-shadow: 0 1px 8px rgb(0 0 0 / 0.7);
 }

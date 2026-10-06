@@ -10,8 +10,8 @@ interface GlassCardProps {
   children: ReactNode
 }
 
-// A linked card with its media on top and its text on a liquid-glass panel
-// below, set against a blurred copy of the artwork.
+// A linked card with its media on the left and its text on a liquid-glass
+// panel beside it, set against a blurred copy of the artwork.
 export default function GlassCard({ href, media, backdropSrc, children }: GlassCardProps) {
   return (
     <a className="glass-card" href={href} target="_blank" rel="noopener noreferrer">

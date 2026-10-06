@@ -3,18 +3,19 @@ import App from './App'
 import { renderMarkup } from './test/renderMarkup'
 
 describe('App', () => {
-  test('lays out the static sections around the main content', () => {
-    const sections = renderMarkup(<App />, '[aria-label]').map((el) => el.attrs['aria-label'])
-    expect(sections).toContain('Projects')
-    expect(sections).toContain('Contact')
-    // The live-data sections render nothing until their data loads.
-    expect(sections).not.toContain('Weather')
+  test('puts the intro and projects in the main column', () => {
+    const sections = renderMarkup(<App />, '.bento-main > [aria-label]').map((el) => el.attrs['aria-label'])
+    expect(sections).toEqual(['Intro', 'Projects'])
   })
 
-  test("points the hero's Get in Touch link at the contact section", () => {
-    const [link] = renderMarkup(<App />, 'a.hero-button')
-    const targets = renderMarkup(<App />, `[id="${link?.attrs.href?.slice(1)}"]`)
-    expect(targets.map((el) => el.attrs['aria-label'])).toEqual(['Contact'])
+  test('holds a placeholder for each live-data tile until its data loads', () => {
+    const tiles = renderMarkup(<App />, '.bento-side > [aria-busy="true"]').map((el) => el.attrs['aria-label'])
+    expect(tiles).toEqual(['Weather', 'Currently Listening', 'Currently Watching'])
+  })
+
+  test('links the contact details from the intro', () => {
+    const labels = renderMarkup(<App />, '.hero a').map((el) => el.attrs['aria-label'])
+    expect(labels).toEqual(['Email', 'LinkedIn profile', 'GitHub profile', 'Instagram profile'])
   })
 
   test('lists every project', () => {

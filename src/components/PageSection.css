@@ -1,11 +1,6 @@
 /* The starfield sits fixed behind the whole page, so each section sits on a
-   liquid-glass panel over it. `:root` outranks each section's own border and
-   margin. */
-:root .page-section {
-  width: calc(100% - 2rem);
-  margin-bottom: 1.5rem;
-  border-top: none;
-
+   liquid-glass panel over it. */
+.page-section {
   /* The sky behind the glass is always dark, so the panels use light text
      whatever the page theme; sections color their text from these. */
   --text: #f5f5f7;
@@ -15,4 +10,20 @@
 
   color: var(--text);
   text-shadow: 0 1px 6px rgb(0 0 0 / 0.45);
+}
+
+/* Zero specificity, so any section's own class can override the defaults. */
+:where(.page-section) {
+  min-width: 0;
+  margin: 0;
+  padding: 1.25rem;
+}
+
+.page-section-title {
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
 }

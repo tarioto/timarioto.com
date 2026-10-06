@@ -1,24 +1,18 @@
-import GlassBacking from './GlassBacking'
+import ContactLinks, { type ContactInfo } from './ContactLinks'
 import './Hero.css'
+import PageSection from './PageSection'
 
-interface HeroProps {
+interface HeroProps extends ContactInfo {
   name: string
   tagline: string
 }
 
-export default function Hero({ name, tagline }: HeroProps) {
+export default function Hero({ name, tagline, ...contact }: HeroProps) {
   return (
-    <header className="hero">
-      <div className="hero-content">
-        <h1 className="hero-headline">Hi, I&apos;m {name}.</h1>
-        <p className="hero-tagline">{tagline}</p>
-        <div className="hero-actions">
-          <a className="hero-button hero-button-secondary" href="#contact">
-            <GlassBacking radius={8} />
-            <span>Get in Touch</span>
-          </a>
-        </div>
-      </div>
-    </header>
+    <PageSection className="hero" aria-label="Intro">
+      <h1 className="hero-headline">Hi, I&apos;m {name}.</h1>
+      <p className="hero-tagline">{tagline}</p>
+      <ContactLinks {...contact} />
+    </PageSection>
   )
 }

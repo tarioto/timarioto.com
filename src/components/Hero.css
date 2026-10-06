@@ -1,64 +1,28 @@
 .hero {
-  position: relative;
-  overflow: hidden;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 1.75rem;
 }
 
 .hero-headline {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  color: #f5f5f7;
+  color: var(--text);
 }
 
 .hero-tagline {
-  margin-top: 0.75rem;
-  color: rgb(245 245 247 / 72%);
-  font-size: 1.25rem;
+  margin: 0.5rem 0 1rem;
+  color: var(--text-muted);
+  font-size: 1.15rem;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
+/* Pulled left so the first icon lines up with the text above it. */
+.hero .contact-links-row {
+  margin-left: -0.5rem;
 }
 
 @media (max-width: 480px) {
   .hero-headline {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-.hero-button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-.hero-button-secondary {
-  white-space: nowrap;
-  color: #f5f5f7;
-  text-shadow: 0 1px 6px rgb(0 0 0 / 0.45);
-}
-
-.hero-button-secondary:hover {
-  color: #f5f5f7;
 }
