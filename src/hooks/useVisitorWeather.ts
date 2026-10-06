@@ -11,7 +11,7 @@ interface CurrentConditions {
   windKph: number
 }
 
-interface ForecastDay {
+export interface ForecastDay {
   date: string
   tempMinC: number
   tempMaxC: number
@@ -23,7 +23,8 @@ export interface VisitorWeather {
   lat: number
   lon: number
   status: VisitorLocationStatus
-  // True until the forecast request has settled, including while locating.
+  // True until the forecast request has settled, including while locating,
+  // but not while the location prompt sits unanswered.
   loading: boolean
   locationName: string | null
   current: CurrentConditions | null
@@ -132,7 +133,7 @@ export function useVisitorWeather(): VisitorWeather {
   })
 
   useEffect(() => {
-    if (location.status === 'loading') return
+    if (location.status === 'loading' || location.status === 'unanswered') return
     let cancelled = false
     const controller = new AbortController()
 
@@ -150,5 +151,11 @@ export function useVisitorWeather(): VisitorWeather {
   }, [location.lat, location.lon, location.status])
 
   const { fetched, ...weather } = data
-  return { lat: location.lat, lon: location.lon, status: location.status, loading: !fetched, ...weather }
+  return {
+    lat: location.lat,
+    lon: location.lon,
+    status: location.status,
+    loading: !fetched && location.status !== 'unanswered',
+    ...weather,
+  }
 }

@@ -1,10 +1,14 @@
-import { afterEach, describe, expect, test } from 'bun:test'
-import { render, screen } from '@testing-library/react'
-import { fetchesSettled, openMeteoResponse, stubFetch, stubGeolocation } from '../test/stubs'
+import { afterEach, describe, expect, jest, test } from 'bun:test'
+import { act, render, screen } from '@testing-library/react'
+import { PROMPT_TIMEOUT_MS } from '../hooks/useVisitorLocation'
+import { answerGeolocation, fetchesSettled, openMeteoResponse, stubFetch, stubGeolocation } from '../test/stubs'
 import WeatherSection from './WeatherSection'
 
 let restore = () => {}
-afterEach(() => restore())
+afterEach(() => {
+  restore()
+  jest.useRealTimers()
+})
 
 describe('WeatherSection', () => {
   test("shows the current weather and forecast for the visitor's city", async () => {
@@ -40,6 +44,42 @@ describe('WeatherSection', () => {
     expect(cards).toHaveLength(5)
     expect(cards[0]?.querySelector('.glass-backing')).not.toBeNull()
     expect(cards[0]?.querySelectorAll('.skeleton-text')).toHaveLength(3)
+  })
+
+  test('keeps the same panel and forecast cards when the weather loads', async () => {
+    restore = stubGeolocation({ lat: 51.5, lon: -0.12 })
+    const fetchSpy = stubFetch({ 'api.open-meteo.com': openMeteoResponse, 'api.bigdatacloud.net': {} })
+    const { container } = render(<WeatherSection />)
+    const panel = container.querySelector('section')
+    const firstCard = container.querySelector('.weather-section-forecast-card')
+    await fetchesSettled(fetchSpy)
+
+    expect(container.querySelector('section')).toBe(panel)
+    expect(panel?.hasAttribute('aria-busy')).toBe(false)
+    expect(container.querySelector('.weather-section-forecast-card')).toBe(firstCard)
+    expect(container.querySelector('.skeleton-text')).toBeNull()
+  })
+
+  test('says no location is available when the prompt goes unanswered, in the same panel', async () => {
+    jest.useFakeTimers()
+    restore = stubGeolocation('pending')
+    const fetchSpy = stubFetch({ 'api.open-meteo.com': openMeteoResponse, 'api.bigdatacloud.net': {} })
+    const { container } = render(<WeatherSection />)
+    const panel = container.querySelector('section')
+    act(() => jest.advanceTimersByTime(PROMPT_TIMEOUT_MS))
+
+    expect(screen.getByText('No location available')).toBeDefined()
+    expect(screen.getByText('🌞')).toBeDefined()
+    expect(container.querySelector('.weather-section-forecast')).toBeNull()
+    expect(container.querySelector('section')).toBe(panel)
+    expect(panel?.hasAttribute('aria-busy')).toBe(false)
+
+    // A late answer still brings in the weather.
+    jest.useRealTimers()
+    answerGeolocation({ lat: 51.5, lon: -0.12 })
+    await fetchesSettled(fetchSpy)
+    expect(screen.getByText('20°C')).toBeDefined()
+    expect(screen.queryByText('No location available')).toBeNull()
   })
 
   test('renders nothing when the weather request fails', async () => {

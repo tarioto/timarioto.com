@@ -24,6 +24,11 @@
   text-transform: capitalize;
 }
 
+.weather-section-message {
+  margin: 0;
+  color: var(--text-muted);
+}
+
 .weather-section-forecast {
   margin-top: 0.875rem;
   display: grid;

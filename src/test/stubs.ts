@@ -24,6 +24,20 @@ export async function fetchesSettled(fetchSpy: Mock<typeof fetch>) {
 
 type PositionResult = { lat: number; lon: number } | 'denied' | 'pending'
 
+// The callbacks of the latest request left 'pending', for answerGeolocation.
+let pendingRequest: { success: PositionCallback; error: PositionErrorCallback } | null = null
+
+// Answers the latest 'pending' location request, as a visitor finally
+// responding to the permission prompt would.
+export function answerGeolocation(result: Exclude<PositionResult, 'pending'>) {
+  const request = pendingRequest!
+  pendingRequest = null
+  act(() => {
+    if (result === 'denied') request.error({ code: 1, message: 'denied' } as GeolocationPositionError)
+    else request.success({ coords: { latitude: result.lat, longitude: result.lon } } as GeolocationPosition)
+  })
+}
+
 // Replaces navigator.geolocation for one test; returns a restore function.
 export function stubGeolocation(result: PositionResult | 'unsupported') {
   const owner = Object.getPrototypeOf(navigator)
@@ -33,7 +47,10 @@ export function stubGeolocation(result: PositionResult | 'unsupported') {
   } else {
     const geolocation = {
       getCurrentPosition(success: PositionCallback, error: PositionErrorCallback) {
-        if (result === 'pending') return
+        if (result === 'pending') {
+          pendingRequest = { success, error }
+          return
+        }
         if (result === 'denied') error({ code: 1, message: 'denied' } as GeolocationPositionError)
         else success({ coords: { latitude: result.lat, longitude: result.lon } } as GeolocationPosition)
       },
