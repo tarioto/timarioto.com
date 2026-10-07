@@ -6,6 +6,8 @@ const result = await Bun.build({
   entrypoints: ['./index.html'],
   outdir: './dist',
   minify: true,
+  // Lets the day sky's three.js load as its own chunk, only when it's needed.
+  splitting: true,
   sourcemap: 'linked',
   naming: {
     entry: '[dir]/[name].[ext]',

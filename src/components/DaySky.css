@@ -1,0 +1,52 @@
+/* Fills the sky layer; the gradient set inline shows until WebGL draws, and
+   stays as the whole sky where WebGL isn't available. */
+.day-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.day-sky-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* Labels are pinned to points in the 3D scene: each frame sets a transform
+   that moves the top-left corner onto its point, and `translate` then
+   offsets the label from it. */
+.day-sky-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.day-sky-label--event {
+  translate: -50% 10px;
+  opacity: 0.85;
+}
+
+.day-sky-label--peak {
+  translate: -50% calc(-100% - 10px);
+  opacity: 0.6;
+}
+
+.day-sky-label--sun {
+  translate: 22px -50%;
+  font-weight: 600;
+}
+
+.day-sky-label--compass {
+  translate: -50% 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  opacity: 0.4;
+}

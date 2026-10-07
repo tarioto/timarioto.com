@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import Hero from './components/Hero'
 import type { Project } from './components/ProjectCard'
 import ProjectsSection from './components/ProjectsSection'
-import Starfield from './components/Starfield'
+import SkyBackground from './components/SkyBackground'
 import WeatherSection from './components/WeatherSection'
 
 const NAME = 'Tim Arioto'
@@ -45,7 +45,7 @@ const projects: Project[] = [
 export default function App() {
   return (
     <>
-      <Starfield />
+      <SkyBackground />
       <Bento
         main={
           <>

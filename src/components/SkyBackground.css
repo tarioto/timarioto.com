@@ -1,0 +1,12 @@
+/* Fixed behind the whole page, like the starfield. */
+.sky-background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.sky-background-fallback {
+  position: absolute;
+  inset: 0;
+}

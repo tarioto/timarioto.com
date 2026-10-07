@@ -1,4 +1,4 @@
-type RGB = [number, number, number]
+export type RGB = [number, number, number]
 
 interface GradientStop {
   tempC: number
@@ -23,11 +23,11 @@ function lerp(a: number, b: number, t: number): number {
   return a + (b - a) * t
 }
 
-function lerpRgb(a: RGB, b: RGB, t: number): RGB {
+export function lerpRgb(a: RGB, b: RGB, t: number): RGB {
   return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]
 }
 
-function toRgbString([r, g, b]: RGB): string {
+export function toRgbString([r, g, b]: RGB): string {
   return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`
 }
 
