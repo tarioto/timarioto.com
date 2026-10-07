@@ -56,3 +56,88 @@
     flex: none;
   }
 }
+
+/* Tucking the tiles away: the columns slide out past the sides of the
+   screen (the main one left, the side one right) and the footer drops off
+   the bottom, leaving the sky. A full viewport width is always far enough,
+   since each column starts inside the screen. Clipped so the slid-out
+   columns don't widen the page. */
+.bento {
+  overflow-x: clip;
+}
+
+.bento-main,
+.bento-side,
+.bento > :last-child {
+  transition:
+    translate 700ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 700ms ease;
+}
+
+/* A beat apart, so the columns peel away rather than move as one block. */
+.bento[data-tucked] .bento-side,
+.bento:not([data-tucked]) .bento-main {
+  transition-delay: 60ms;
+}
+
+.bento[data-tucked] .bento-main {
+  translate: -100vw 0;
+}
+
+.bento[data-tucked] .bento-side {
+  translate: 100vw 0;
+}
+
+.bento[data-tucked] > :last-child {
+  translate: 0 150%;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-main,
+  .bento-side,
+  .bento > :last-child {
+    transition: opacity 300ms ease;
+  }
+
+  .bento[data-tucked] .bento-main,
+  .bento[data-tucked] .bento-side,
+  .bento[data-tucked] > :last-child {
+    translate: none;
+    opacity: 0;
+  }
+}
+
+/* Stays put in the corner, over everything, so it's there to bring the
+   tiles back. */
+.bento-toggle {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: scale 150ms ease;
+}
+
+.bento-toggle-emoji {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.bento-toggle:hover {
+  scale: 1.08;
+}
+
+.bento-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
