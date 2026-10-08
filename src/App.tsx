@@ -20,11 +20,19 @@ const contact: ContactInfo = {
 
 const projects: Project[] = [
   {
-    title: 'VIZRISK',
-    description: 'Risk visualization tool.',
-    url: 'https://vizrisk.timarioto.com',
-    repo: 'https://github.com/tarioto/vizrisk',
-    screenshot: '/projects/vizrisk.jpg',
+    title: 'WearToday',
+    description: "iOS app that tells you what to wear and bring for the day's weather, using Apple's on-device AI.",
+    // An iOS app with no website, so the card links to the repo too.
+    url: 'https://github.com/tarioto/WearToday',
+    repo: 'https://github.com/tarioto/WearToday',
+    screenshot: '/projects/weartoday.jpg',
+  },
+  {
+    title: 'Winchester Storage',
+    description: 'Website for an RV and boat storage facility in Reno, NV.',
+    url: 'https://winchesterrvandboatstorage.com',
+    repo: 'https://github.com/tarioto/winchester-storage',
+    screenshot: '/projects/winchester-storage.jpg',
   },
   {
     title: 'timarioto.com',
@@ -34,11 +42,11 @@ const projects: Project[] = [
     screenshot: '/projects/timarioto.jpg',
   },
   {
-    title: 'Winchester Storage',
-    description: 'Website for an RV and boat storage facility in Reno, NV.',
-    url: 'https://winchesterrvandboatstorage.com',
-    repo: 'https://github.com/tarioto/winchester-storage',
-    screenshot: '/projects/winchester-storage.jpg',
+    title: 'VIZRISK',
+    description: 'Risk visualization tool.',
+    url: 'https://vizrisk.timarioto.com',
+    repo: 'https://github.com/tarioto/vizrisk',
+    screenshot: '/projects/vizrisk.jpg',
   },
 ]
 
