@@ -18,8 +18,9 @@ describe('App', () => {
     expect(labels).toEqual(['Email', 'LinkedIn profile', 'GitHub profile', 'Instagram profile'])
   })
 
-  test('lists every project', () => {
-    expect(renderMarkup(<App />, '.projects-section-grid > *')).toHaveLength(3)
+  test('lists every project, newest first', () => {
+    const titles = renderMarkup(<App />, '.project-card-title-text').map((el) => el.text)
+    expect(titles).toEqual(['WearToday', 'Winchester Storage', 'timarioto.com', 'VIZRISK'])
   })
 
   test('dates the copyright to the current year', () => {
