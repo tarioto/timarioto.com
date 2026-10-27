@@ -3,16 +3,16 @@ name: Infra
 on:
   pull_request:
     paths:
-      - 'infra/**'
-      - 'lambda/**'
-      - '.github/workflows/infra.yml'
+      - "infra/**"
+      - "lambda/**"
+      - ".github/workflows/infra.yml"
   push:
     branches:
       - main
     paths:
-      - 'infra/**'
-      - 'lambda/**'
-      - '.github/workflows/infra.yml'
+      - "infra/**"
+      - "lambda/**"
+      - ".github/workflows/infra.yml"
   # Manual "refresh now" button: re-runs the pollers without applying.
   workflow_dispatch:
 

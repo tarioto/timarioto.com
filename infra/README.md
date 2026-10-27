@@ -6,14 +6,14 @@ certificate and Route53 alias records.
 
 ## Resources
 
-| File            | Resources |
-| --------------- | --------- |
+| File            | Resources                                                               |
+| --------------- | ----------------------------------------------------------------------- |
 | `s3.tf`         | Private S3 bucket + public-access block + CloudFront-only bucket policy |
-| `cloudfront.tf` | Origin Access Control + CloudFront distribution |
-| `acm.tf`        | ACM cert (us-east-1) + Route53 DNS validation (auto-renews) |
-| `dns.tf`        | Route53 A/AAAA alias records for apex + www |
-| `variables.tf`  | `aws_region`, `domain_name`, `subject_alternative_names` |
-| `outputs.tf`    | Bucket name, distribution ID, CloudFront domain, cert ARN |
+| `cloudfront.tf` | Origin Access Control + CloudFront distribution                         |
+| `acm.tf`        | ACM cert (us-east-1) + Route53 DNS validation (auto-renews)             |
+| `dns.tf`        | Route53 A/AAAA alias records for apex + www                             |
+| `variables.tf`  | `aws_region`, `domain_name`, `subject_alternative_names`                |
+| `outputs.tf`    | Bucket name, distribution ID, CloudFront domain, cert ARN               |
 
 State is stored remotely in S3 (`s3://timarioto-tofu-state-322859817636`, key
 `timarioto.com/terraform.tfstate`) with native S3 locking (`use_lockfile`, no
